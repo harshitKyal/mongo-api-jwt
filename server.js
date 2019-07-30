@@ -24,7 +24,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.get('/', function(req, res){
 res.json({"tutorial" : "Build REST API with node.js"});
 });
-
+var cors = require('cors')
+app.use(cors())
 app.use('/api', express.static(__dirname + '/apidoc/'));
 
 // public route
