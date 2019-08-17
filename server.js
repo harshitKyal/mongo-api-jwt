@@ -40,18 +40,18 @@ app.use('/api', express.static(__dirname + '/apidoc/'));
 app.use('/users', users);
 // private route
 app.use('/movies',validateUser, movies);
-app.use('/userRole',validateUser, userRole);
-app.use('/ocList',validateUser, ocList);
+app.use('/userRole', userRole);
+app.use('/ocList', ocList);
 
 app.use('/branch',branchList);
 
 app.use('/customer',customerList);
 app.use('/customerType',customerTypeList);
 
-app.use('/priority',validateUser, priorityList);
-app.use('/spare', validateUser,spareList);
-app.use('/subAssembly', validateUser,subAssemblyList);
-app.use('/products',validateUser, products);
+app.use('/priority', priorityList);
+app.use('/spare',spareList);
+app.use('/subAssembly',subAssemblyList);
+app.use('/products', products);
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
