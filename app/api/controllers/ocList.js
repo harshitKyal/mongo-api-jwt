@@ -2,16 +2,43 @@ const ocListModel = require('../models/ocList');
 module.exports = {
  
    getByOcNumber: function(req, res, next) {
-      // console.log(req.body.roleName)
-      ocListModel.findOne({OCNumber:req.body.OCNumber},function(err,result){
-         if (result)
-            res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
-         else 
-            res.json({status:"error",message:"Invalid OC Number!!!",data:null})
-      });
+      console.log(req.body.roleName)
+      let roleName = req.body.roleName;
+      let Status =null;
+      if (roleName == "Admin" || roleName == "QA Team" ) {
+         ocListModel.findOne({ OCNumber:req.body.OCNumber},function(err,result){
+            if (result)
+               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+            else 
+               res.json({status:"error",message:"Invalid OC Number!!!",data:null})
+         });
+      }
+      else {
+         if(roleName == "Sales Team")
+            Status = "In Progress - Sales"
+         else if (roleName = "Branch/Dealer")
+            Status = "In Progress - Branch/Dealer"
+      
+         ocListModel.findOne({ OCNumber:req.body.OCNumber , "Status.name":Status },function(err,result){
+            if (result)
+               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+            else 
+               res.json({status:"error",message:"Invalid OC Number!!!",data:null})
+         });
+      }
    },
-   getByStatus: function(req, res, next) {
-      ocListModel.find({"Status.name":req.body.Status},function(err,result){
+   getByRoleName: function(req, res, next) {
+      let roleName = req.body.roleName;
+      let Status =null;
+      if (roleName == "Admin" || roleName == "QA Team" ) 
+         Status = null;
+      else if(roleName == "Sales Team")
+         Status = "In Progress - Sales"
+      else if (roleName = "Branch/Dealer")
+         Status = "In Progress - Branch/Dealer"
+
+      ocListModel.find({"Status.name":Status},function(err,result){
+         console.log(result)
          if(result)
             res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
          else
@@ -37,6 +64,7 @@ module.exports = {
               CreatedDate : req.body.CreatedDate,
               UpdatedDate : req.body.UpdatedDate,
               SerialNumbers : req.body.SerialNumbers,
+              customer:req.body.customer,
           });
 
           ocListModel.findOne({
@@ -74,12 +102,13 @@ module.exports = {
          // Find a particular one inside the products model and then update it //
          ocListModel.findOneAndUpdate({
              OCNumber: parseInt(req.params.OCNumber)
-         }, ocList, function(err, success,next) {
+         }, ocList, function(err, success) {
              // If success //
              if (success)
                res.json({status:"success", message: "OC Updated Successfully!!!", data:null});
              else 
-               next(err);            
-         });
+             res.json({status:"error", message: "Invalid OC number", data:null});
+
+            });
    },
 }

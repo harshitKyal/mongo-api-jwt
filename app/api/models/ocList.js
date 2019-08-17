@@ -51,6 +51,11 @@ SpareIDs :[
         name:String,
     }
 ],
+Customer :{
+        name:String,
+        city:String,
+        contactNumber:String
+    },
 Status:{
     name:String ,
 },

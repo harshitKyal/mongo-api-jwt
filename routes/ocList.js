@@ -42,6 +42,12 @@ router.get('/', ocListController.getAll);
                     "_id":"String",
                     "name":"String"
                 },
+                "customer":{
+                    "_id":"String",
+                    "name":"String",
+                    "city":"String",
+                    "contactNumber":"String"
+                },
                 "BranchID":{
                     "_id":"String",
                     "name":"String"
@@ -114,6 +120,7 @@ router.get('/getByOCNumber', ocListController.getByOcNumber);
         * @apiGroup OC List
         *
         * @apiParam {Number} OCNumber to get OC List. (Should pass as a body parameter.)
+        * @apiParam {String} roleName to get OC List. (Should pass as a body parameter.)
         * @apiSuccessExample {json} Success-Response:
         *{
         "status": "success",
@@ -148,6 +155,12 @@ router.get('/getByOCNumber', ocListController.getByOcNumber);
                 "CustomerType":{
                     "_id":"String",
                     "name":"String"
+                },
+                "Customer":{
+                    "_id":"String",
+                    "name":"String",
+                    "city":"String",
+                    "contactNumber":"String"
                 },
                 "BranchID":{
                     "_id":"String",
@@ -177,13 +190,13 @@ router.get('/getByOCNumber', ocListController.getByOcNumber);
         "data": null
         }
         */
-router.get('/getByStatus', ocListController.getByStatus);
+router.get('/getByRoleName', ocListController.getByRoleName);
 /**
-        * @api {get} ocList/getByStatus get oc List by Status
+        * @api {get} ocList/getByRoleName get oc List by Role
         * @apiVersion 0.0.1
         * @apiGroup OC List
         *
-        * @apiParam {String} Status to get OC List. (Should pass as a body parameter.)
+        * @apiParam {String} roleName to get OC List. (Should pass as a body parameter.)
         * @apiSuccessExample {json} Success-Response:
         *{
         "status": "success",
@@ -218,6 +231,12 @@ router.get('/getByStatus', ocListController.getByStatus);
                 "CustomerType":{
                     "_id":"String",
                     "name":"String"
+                },
+                "Customer":{
+                    "_id":"String",
+                    "name":"String",
+                    "city":"String",
+                    "contactNumber":"String"
                 },
                 "BranchID":{
                     "_id":"String",
@@ -250,7 +269,7 @@ router.get('/getByStatus', ocListController.getByStatus);
 
 router.put('/:OCNumber', ocListController.updateOC);
 /**
-        * @api {get} ocList/:OCNumber update oc List by OC Number
+        * @api {put} ocList/:OCNumber update oc List by OC Number
         * @apiVersion 0.0.1
         * @apiGroup OC List
         *
