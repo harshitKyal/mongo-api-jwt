@@ -6,6 +6,8 @@ const userRole= require('./routes/userRole') ;
 const ocList= require('./routes/ocList') ;
 const subAssemblyList= require('./routes/masterDatabase/subAssembly') ;
 
+const customerList= require('./routes/masterDatabase/customer') ;
+const branchList= require('./routes/masterDatabase/branch') ;
 const priorityList= require('./routes/masterDatabase/priority') ;
 const customerTypeList= require('./routes/masterDatabase/customerType') ;
 const spareList= require('./routes/masterDatabase/spare') ;
@@ -41,6 +43,9 @@ app.use('/movies',validateUser, movies);
 app.use('/userRole',validateUser, userRole);
 app.use('/ocList',validateUser, ocList);
 
+app.use('/branch', validateUser,branchList);
+
+app.use('/customer',customerList);
 app.use('/customerType', validateUser,customerTypeList);
 
 app.use('/priority',validateUser, priorityList);
