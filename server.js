@@ -3,7 +3,13 @@ const logger = require('morgan');
 const movies = require('./routes/movies') ;
 const users = require('./routes/users');
 const userRole= require('./routes/userRole') ;
+const ocList= require('./routes/ocList') ;
+const subAssemblyList= require('./routes/masterDatabase/subAssembly') ;
 
+const priorityList= require('./routes/masterDatabase/priority') ;
+const customerTypeList= require('./routes/masterDatabase/customerType') ;
+const spareList= require('./routes/masterDatabase/spare') ;
+const products= require('./routes/masterDatabase/product') ;
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
 var jwt = require('jsonwebtoken');
@@ -31,9 +37,16 @@ app.use('/api', express.static(__dirname + '/apidoc/'));
 // public route
 app.use('/users', users);
 // private route
-app.use('/movies', validateUser, movies);
-app.use('/userRole', validateUser, userRole);
+app.use('/movies', movies);
+app.use('/userRole', userRole);
+app.use('/ocList', ocList);
 
+app.use('/customerType', customerTypeList);
+
+app.use('/priority', priorityList);
+app.use('/spare', spareList);
+app.use('/subAssembly', subAssemblyList);
+app.use('/products', products);
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });

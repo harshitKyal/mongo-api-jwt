@@ -40,4 +40,13 @@ login: function(req, res, next) {
          
     });
  },
+ getAll: function(req, res, next) {
+   userModel.find({},function(err, ocList){
+     if (err) 
+      next(err)
+      else 
+      res.json({status:"success", message: "user Role List fetched!!!", data:{ocList: ocList}});
+
+     })
+    },
 }
