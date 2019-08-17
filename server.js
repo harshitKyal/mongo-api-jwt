@@ -43,10 +43,10 @@ app.use('/movies',validateUser, movies);
 app.use('/userRole',validateUser, userRole);
 app.use('/ocList',validateUser, ocList);
 
-app.use('/branch', validateUser,branchList);
+app.use('/branch',branchList);
 
 app.use('/customer',customerList);
-app.use('/customerType', validateUser,customerTypeList);
+app.use('/customerType',customerTypeList);
 
 app.use('/priority',validateUser, priorityList);
 app.use('/spare', validateUser,spareList);
