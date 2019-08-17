@@ -8,15 +8,15 @@ const ocListSchema = new Schema({
   unique:true ,
   trim: true,
  },
- OcDate: {
+ OCDate: {
   type: Date,
-  trim: true,
-  required: true
+  trim: true
+//   required: true
  },
  OCNotes: {
     type: String,
-    trim: true,
-    required: true
+    trim: true
+    // required: true
 },
  Priority : {
      name : {
@@ -29,24 +29,24 @@ const ocListSchema = new Schema({
          type:String ,
      },
     },
- Branch :{
+ BranchID :{
      name :{
          type:String ,
      },
  },
- ProductId :{
+ ProductID :{
      name:{
          type:String ,
      },
   },
- SubAssemblyIds:[
+ SubAssemblyIDs:[
      {
          name :{
              type:String,
          },
      }
  ],
-SpareIds :[
+SpareIDs :[
     {
         name:String,
     }
@@ -55,10 +55,10 @@ Status:{
     name:String ,
 },
 CreatedBy:{
-    type:Date,
+    type:String,
 },
 UpdatedBy:{
-    type:Date,
+    type:String,
 },
 CreatedDate :{
     type: Date,
