@@ -6,12 +6,13 @@ module.exports = {
       let roleName = req.body.roleName;
       let status = req.body.status;
       let action = req.body.action;
-      let installtionComplete = req.installtionComplete;
-      let installationDate = req.installationDate;
-      let OCNumber = req.body.OCNumber;
-      let BranchName = req.body.BranchName;
+      let installationComplete = req.body.installationComplete;
+      let installationDate = req.body.installationDate;
+      let ocId = req.body.ocId;
+      let branchName = req.body.branchName;
       let updateStatus;
-      if (installtionComplete){
+
+      if (installationComplete){
          updateStatus="Closed";
       }else if (action == "Update" && roleName == "Branch/Dealer"){
          if(installationDate) {
@@ -20,7 +21,7 @@ module.exports = {
 
       }else if (action == "Close"){
          if(roleName=="Sales"){
-            if(BranchName){
+            if(branchName){
                updateStatus = "Installation Scheduled"   
             }else{
                updateStatus="In Progress - Branch/Dealer";
@@ -28,14 +29,17 @@ module.exports = {
          }else
             updateStatus= "Close";
       }
+
+      // console.log(updateStatus)
       ocListModel.findOneAndUpdate({
-         OCNumber: OCNumber
+         _id: ocId
      }, {"Status.name":updateStatus}, function(err, success) {
          // If success //
+         // console.log(success)
          if (success)
-           res.json({status:"success", message: "OC Status Successfully!!!", data:null});
+            res.json({status:"success", message: "OC Status updated Successfully!!!", data:success});
          else 
-         res.json({status:"error", message: "Invalid OC ID", data:null});
+            res.json({status:"error", message: "Invalid OC ID", data:null});
 
         });
 

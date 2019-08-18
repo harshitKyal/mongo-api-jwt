@@ -3,6 +3,34 @@ const router = express.Router();
 const ocListController = require('../app/api/controllers/ocList');
 // router.get('/', ocListController.getAll);
 
+router.post('/updateStatus', ocListController.updateStatus);
+/**
+        * @api {post} ocList/updateStatus update OC status
+        * @apiVersion 0.0.1
+        * @apiGroup OC List
+        *
+        * @apiParam {String} ocId Oc Id to update oc .(Oc ID should be pass as a body parameter - required and unique)
+        * @apiParam {String} roleName roleName should be pass as a body parameter-required.
+        * @apiParam {action} action to specify update or close action of OC. action should be pass as a body parameter - required.
+        * @apiParam {Boolean} installationComplete installation Complete should pass as a body parameter.
+        * @apiParam {Date} installationDate installation Date should pass as a body parameter.
+        * @apiParam {String} branchName branch Name  should pass as a body parameter.
+        * 
+        * @apiSuccessExample {json} Success-Response:
+        *{
+        "status": "success",
+        "message": "OC Status Updated successfully!!!",
+        "data": null
+        *}
+        *
+        @apiErrorExample {json} Error-Response:
+        *
+        * {
+        "status": "error",
+        "message": "Invalid OC ID!",
+        "data": null
+        }
+        */
 router.post('/create', ocListController.create);
 /**
         * @api {post} ocList/create create new oc List
