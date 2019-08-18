@@ -1,4 +1,5 @@
 const userModel = require('../models/users');
+const userRoleModel = require('../models/userRole');
 const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken');
 module.exports = {
@@ -20,16 +21,19 @@ login: function(req, res, next) {
                if(bcrypt.compareSync(req.body.password, userInfo.password)) {
                   const token = jwt.sign({id: userInfo._id}, req.app.get('secretKey'), { expiresIn: '1h' });
                   delete userInfo["password"]
-                  let userI = userInfo
-                  // console.log(userI)
+                  let userI = userInfo;
+                  let roleName ;
                   delete userI
-                  console.log(delete userI.password)
-                  console.log(userI)
-                  // userI.forEach(el=>{
-                  //    console.log(el)
-                  // })
-                  // console.log(userInfo)
-                  res.json({status:"success", message: "Login Successfully!!!", data:{user: userInfo, token:token}});
+                  let userInformation = {};
+                  userInformation = userInfo;
+                  userRoleModel.findOne({_id:userInfo.RoleId},function(err,result){
+                     if(result){
+                        roleName = result.RoleName;
+                        res.json({status:"success", message: "Login Successfully!!!", data:{user: userInfo, token:token,userRole :roleName}});
+                     }
+                     else
+                        console.log(err)
+                  });
                }else{
                   res.json({status:"error", message: "Invalid email/password!!!", data:null});
                }

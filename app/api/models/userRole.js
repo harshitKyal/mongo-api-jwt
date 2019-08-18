@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+
+mongoose.pluralize(null);
 //Define a schema
 const Schema = mongoose.Schema;
 const UserRoleSchema = new Schema({
@@ -9,4 +11,4 @@ const UserRoleSchema = new Schema({
   required: true,
  }
 });
-module.exports = mongoose.model('UserRole', UserRoleSchema);
+module.exports = mongoose.model('userRole', UserRoleSchema);

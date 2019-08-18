@@ -50,8 +50,10 @@ router.post('/login', userController.login);
                 "password": "string",
                 "__v": "number"
                 },
-            "token": "string"
-            }
+            "token": "string",
+            "userRole":"String"                
+        }
+
         *}
 	  @apiErrorExample {json} Error-Response:
 	 *

@@ -5,7 +5,7 @@ module.exports = {
 
       let roleName = req.body.roleName;
       let Status =null;
-      let query =null;
+      let query ={};
 
       if (roleName == "Admin" || roleName == "QA Team" ) {
          query = {
@@ -23,9 +23,6 @@ module.exports = {
                "name":Status
             }
          }
-      }
-      if (req.body.Priority) {
-         query.Priority = req.body.Priority
       }
       console.log(query)
       ocListModel.findOne( query,function(err,result){
@@ -52,15 +49,31 @@ module.exports = {
          }
       }
       if (req.body.Priority) {
-         query.Priority = req.body.Priority
+         ocListModel.find({"Status.name":Status,"Priority.name":req.body.Priority},function(err,result){
+            if(result.length)
+               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+            else
+               res.json({status:"error",message:"No Oc List found!!!",data:null})
+                  
+         });
+         // query.Priority.name = req.body.Priority
+      }else{
+         ocListModel.find(query,function(err,result){
+            if(result.length)
+               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+            else
+               res.json({status:"error",message:"No Oc List found!!!",data:null})
+                  
+         });
       }
-      ocListModel.find(query,function(err,result){
-         if(result.length)
-            res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
-         else
-            res.json({status:"error",message:"No Oc List found!!!",data:null})
+      // console.log(query)
+      // ocListModel.find(query,function(err,result){
+      //    if(result.length)
+      //       res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+      //    else
+      //       res.json({status:"error",message:"No Oc List found!!!",data:null})
                
-      });
+      // });
    },
    create: function(req, res,next) {
 

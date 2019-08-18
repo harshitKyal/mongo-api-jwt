@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+
+mongoose.pluralize(null);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 //Define a schema
@@ -32,4 +34,4 @@ UserSchema.pre('save', function(next){
 });
     
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('users', UserSchema);

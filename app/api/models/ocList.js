@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+
+mongoose.pluralize(null);
 //Define a schema
 const Schema = mongoose.Schema;
 const ocListSchema = new Schema({
