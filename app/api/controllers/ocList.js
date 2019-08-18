@@ -108,7 +108,9 @@ module.exports = {
                   ocList.save(function(error,next,result) {
                       // If error //
                       if (error)
-                           next(error)
+                        res.json({status:"success",message:"something looks wrong!!!",data:err})
+          
+                           //next(error)
                       // If successfuly saved //
                       else 
                           res.json({status:"success",message:"oc List Added successfully!!!",data:null})
