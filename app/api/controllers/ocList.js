@@ -1,45 +1,61 @@
 const ocListModel = require('../models/ocList');
 module.exports = {
  
-   getByOcNumber: function(req, res, next) {
-      console.log(req.body.roleName)
+   getByOCNumber: function(req, res, next) {
+
       let roleName = req.body.roleName;
       let Status =null;
+      let query =null;
+
       if (roleName == "Admin" || roleName == "QA Team" ) {
-         ocListModel.findOne({ OCNumber:req.body.OCNumber},function(err,result){
-            if (result)
-               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
-            else 
-               res.json({status:"error",message:"Invalid OC Number!!!",data:null})
-         });
+         query = {
+            "OCNumber":req.body.OCNumber
+         }
       }
       else {
          if(roleName == "Sales Team")
             Status = "In Progress - Sales"
          else if (roleName = "Branch/Dealer")
             Status = "In Progress - Branch/Dealer"
-      
-         ocListModel.findOne({ OCNumber:req.body.OCNumber , "Status.name":Status },function(err,result){
-            if (result)
-               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
-            else 
-               res.json({status:"error",message:"Invalid OC Number!!!",data:null})
-         });
+         query= {
+            "OCNumber":req.body.OCNumber,
+            "Status":{
+               "name":Status
+            }
+         }
       }
+      if (req.body.Priority) {
+         query.Priority = req.body.Priority
+      }
+      console.log(query)
+      ocListModel.findOne( query,function(err,result){
+         if (result)
+            res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+         else 
+            res.json({status:"error",message:"Invalid OC Number!!!",data:null})
+      });
+
    },
    getByRoleName: function(req, res, next) {
       let roleName = req.body.roleName;
       let Status =null;
-      if (roleName == "Admin" || roleName == "QA Team" ) 
-         Status = null;
-      else if(roleName == "Sales Team")
-         Status = "In Progress - Sales"
-      else if (roleName = "Branch/Dealer")
-         Status = "In Progress - Branch/Dealer"
-
-      ocListModel.find({"Status.name":Status},function(err,result){
-         console.log(result)
-         if(result)
+      let query = {}
+      if(roleName !== "Admin" && roleName !== "QA Team") {
+         if(roleName == "Sales Team")
+            Status = "In Progress - Sales"
+         else if (roleName = "Branch/Dealer")
+            Status = "In Progress - Branch/Dealer"
+         query= {
+            "Status":{
+               "name":Status
+            }
+         }
+      }
+      if (req.body.Priority) {
+         query.Priority = req.body.Priority
+      }
+      ocListModel.find(query,function(err,result){
+         if(result.length)
             res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
          else
             res.json({status:"error",message:"No Oc List found!!!",data:null})
@@ -99,15 +115,16 @@ module.exports = {
    updateOC:function(req, res,next) {
       
          var ocList = req.body;
+         console.log(req.body._id)
          // Find a particular one inside the products model and then update it //
          ocListModel.findOneAndUpdate({
-             OCNumber: parseInt(req.params.OCNumber)
+             _id: req.body._id
          }, ocList, function(err, success) {
              // If success //
              if (success)
                res.json({status:"success", message: "OC Updated Successfully!!!", data:null});
              else 
-             res.json({status:"error", message: "Invalid OC number", data:null});
+             res.json({status:"error", message: "Invalid OC ID", data:null});
 
             });
    },

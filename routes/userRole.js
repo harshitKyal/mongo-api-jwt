@@ -3,7 +3,7 @@ const router = express.Router();
 const userRoleController = require('../app/api/controllers/userRole');
 router.post('/create', userRoleController.create);
 /**
-        * @api {post} /userRole/create create new User Role
+        * @api {post} userRole/create create new User Role
         * @apiVersion 0.0.1
         * @apiGroup User Role
         *
@@ -26,7 +26,7 @@ router.post('/create', userRoleController.create);
         */
 router.get('/', userRoleController.fetchAll);
 /**
-        * @api {get} /userRole/ get User Role list
+        * @api {get} userRole/ get User Role list
         * @apiVersion 0.0.1
         * @apiGroup User Role
         *

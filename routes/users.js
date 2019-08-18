@@ -5,7 +5,7 @@ router.get('/', userController.getAll);
 
 router.post('/register', userController.create);
 /**
-        * @api {post} /users/register register
+        * @api {post} users/register register
         * @apiVersion 0.0.1
         * @apiGroup user
         *
@@ -31,7 +31,7 @@ router.post('/register', userController.create);
         */
 router.post('/login', userController.login);
 /**
-        * @api {post} /users/login login
+        * @api {post} users/login login
         * @apiVersion 0.0.1
         * @apiGroup user
         *
