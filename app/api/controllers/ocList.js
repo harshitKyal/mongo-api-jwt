@@ -137,14 +137,14 @@ module.exports = {
               SubAssemblyIDs: req.body.SubAssemblyIDs,
               SpareIDs: req.body.SpareIDs,
               Status:req.body.Status,
-              customer:req.body.customer,
+              Customer:req.body.Customer,
               Installation:req.body.Installation,
               CreatedBy : req.body.CreatedBy,
               UpdatedBy : req.body.UpdatedBy,
               CreatedDate : req.body.CreatedDate,
               UpdatedDate : req.body.UpdatedDate,
-              SerialNumbers : req.body.SerialNumbers,
-              customer:req.body.customer,
+              SerialNumbers : req.body.SerialNumbers
+            //   customer:req.body.customer,
           });
 
           ocListModel.findOne({
