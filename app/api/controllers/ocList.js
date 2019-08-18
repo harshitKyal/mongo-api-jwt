@@ -1,6 +1,46 @@
 const ocListModel = require('../models/ocList');
 module.exports = {
- 
+   
+   updateStatus:function(req,res,next){
+
+      let roleName = req.body.roleName;
+      let status = req.body.status;
+      let action = req.body.action;
+      let installtionComplete = req.installtionComplete;
+      let installationDate = req.installationDate;
+      let OCNumber = req.body.OCNumber;
+      let BranchName = req.body.BranchName;
+      let updateStatus;
+      if (installtionComplete){
+         updateStatus="Closed";
+      }else if (action == "Update" && roleName == "Branch/Dealer"){
+         if(installationDate) {
+           updateStatus="Installation Scheduled";
+         }
+
+      }else if (action == "Close"){
+         if(roleName=="Sales"){
+            if(BranchName){
+               updateStatus = "Installation Scheduled"   
+            }else{
+               updateStatus="In Progress - Branch/Dealer";
+            }
+         }else
+            updateStatus= "Close";
+      }
+      ocListModel.findOneAndUpdate({
+         OCNumber: OCNumber
+     }, {"Status.name":updateStatus}, function(err, success) {
+         // If success //
+         if (success)
+           res.json({status:"success", message: "OC Status Successfully!!!", data:null});
+         else 
+         res.json({status:"error", message: "Invalid OC ID", data:null});
+
+        });
+
+
+   },
    getByOCNumber: function(req, res, next) {
 
       let roleName = req.body.roleName;
@@ -97,6 +137,7 @@ module.exports = {
               SubAssemblyIDs: req.body.SubAssemblyIDs,
               SpareIDs: req.body.SpareIDs,
               Status:req.body.Status,
+              customer:req.body.customer,
               CreatedBy : req.body.CreatedBy,
               UpdatedBy : req.body.UpdatedBy,
               CreatedDate : req.body.CreatedDate,

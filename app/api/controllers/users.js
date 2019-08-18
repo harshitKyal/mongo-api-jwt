@@ -33,7 +33,7 @@ login: function(req, res, next) {
                         res.json({status:"success", message: "Login Successfully!!!", data:{user: userInfo, token:token,userRole :roleName}});
                      }
                      else
-                        res.json({status:"success", message: "Something went wrong!!!", data:err});
+                        res.json({status:"error", message: "Something went wrong!!!", data:err});
                    
                         // console.log(err)
                   });
