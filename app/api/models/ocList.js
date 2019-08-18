@@ -88,9 +88,33 @@ CreatedDate :{
 UpdatedDate:{
     type:Date,
 },
+Installation:{
+    InstallationDate:{
+        type:Date,
+    },
+    installationComplete :{
+        type:Boolean,
+    },
+    invoiceDate:{
+        type:Date,
+    },
+    InstallationTechnician:{
+        type:String,
+    },
+    technicianContact:{
+        type:String,
+    },
+    transport:{
+        type:String,
+    },
+    invoiceNumber:{
+        type:String,
+    }
+
+},
 SerialNumbers:[
     {
-        ID:Number,
+        ID:String,
         name:String,
         srno:String,
 
