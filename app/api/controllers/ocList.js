@@ -138,6 +138,7 @@ module.exports = {
               SpareIDs: req.body.SpareIDs,
               Status:req.body.Status,
               customer:req.body.customer,
+              installation:req.body.installation,
               CreatedBy : req.body.CreatedBy,
               UpdatedBy : req.body.UpdatedBy,
               CreatedDate : req.body.CreatedDate,
