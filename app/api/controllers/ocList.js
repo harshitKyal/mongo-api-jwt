@@ -24,7 +24,6 @@ module.exports = {
             }
          }
       }
-      console.log(query)
       ocListModel.findOne( query,function(err,result){
          if (result)
             res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
@@ -48,33 +47,31 @@ module.exports = {
             }
          }
       }
-      console.log("sad")
       if ((roleName == "Admin" || roleName == "QA Team" ) && req.body.Priority) {
-         console.log(req.body.Priority)
          ocListModel.find({"Priority.name":req.body.Priority},function(err,result){
-            if(result.length)
+            if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
-               res.json({status:"error",message:"No Oc List found!!!",data:null})
+               res.json({status:"error",message:"No Oc List found!!!",data:err})
                   
          });
          
       }
       else if (req.body.Priority) {
          ocListModel.find({"Status.name":Status,"Priority.name":req.body.Priority},function(err,result){
-            if(result.length)
+            if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
-               res.json({status:"error",message:"No Oc List found!!!",data:null})
+               res.json({status:"error",message:"No Oc List found!!!",data:err})
                   
          });
          // query.Priority.name = req.body.Priority
       }else{
          ocListModel.find(query,function(err,result){
-            if(result.length)
+            if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
-               res.json({status:"error",message:"No Oc List found!!!",data:null})
+               res.json({status:"error",message:"Something went wrong!!!",data:err})
                   
          });
       }
@@ -117,15 +114,15 @@ module.exports = {
               // If email doesn't exists //
               else {
                   // Saving the model to the database //                   
-                  ocList.save(function(error,next,result) {
+                  ocList.save(function(err,next,result) {
                       // If error //
-                      if (error)
+                      if (err)
                         res.json({status:"success",message:"something looks wrong!!!",data:err})
           
                            //next(error)
                       // If successfuly saved //
                       else 
-                          res.json({status:"success",message:"oc List Added successfully!!!",data:null})
+                          res.json({status:"success",message:"OC Added successfully!!!",data:null})
                   });
               }
           });

@@ -12,19 +12,19 @@ router.post('/create', ocListController.create);
         * @apiParam {String} OCNumber to create new OC .(Oc Number should be pass as a body parameter - required and unique)
         * @apiParam {Date} OCDate Oc Date should be pass as a body parameter.
         * @apiParam {String} OCNotes Oc Notes should be pass as a body parameter.
-        * @apiParam {String} Priority Priority is an object(Possible Values:HIGH,MEDIUM,LOW). 
-        * @apiParam {String} CustomerType Customer Type is an object(Possible Values:Customer,Corporate,Government).
+        * @apiParam {String} Priority Priority is an object(Possible Values:HIGH,MEDIUM,LOW).( Field -_id:String , name :String.) 
+        * @apiParam {String} CustomerType Customer Type is an object(Possible Values:Customer,Corporate,Government).( Field -_id:String , name :String.)
         * @apiParam {String} Customer Customer is an object(Field - name : String , city : String,contactNumber:String).
-        * @apiParam {String} BranchID branch Ids is an object ( Field - name :String.)
-        * @apiParam {String} ProductID product Ids is an object ( Field - name :String.)
-        * @apiParam {String} SubAssemblyIDs branch Ids is an array of objects ( Field - name :String.)
-        * @apiParam {String} SpareIDs spare Ids is an object ( Field - name :String.)
+        * @apiParam {String} BranchID branch Ids is an object ( Field -_id:String , name :String.)
+        * @apiParam {String} ProductID product Ids is an object ( Field - _id:String ,name :String.)
+        * @apiParam {String} SubAssemblyIDs branch Ids is an array of objects ( Field -_id:String , name :String.)
+        * @apiParam {String} SpareIDs spare Ids is an object ( Field - _id:String ,name :String.)
         * @apiParam {String} Status Status is an object ( Field - name :String.)
         * @apiParam {String} CreatedBy created by (person who created the list)
         * @apiParam {String} UpdatedBy updated by ( person name who updated the list)
         * @apiParam {Date} CreatedDate creation date
         * @apiParam {Date} UpdatedDate updated date
-        * @apiParam {String} SerialNumbers serial numbers is an array of objects ( Field - name : String, srno : String)
+        * @apiParam {String} SerialNumbers serial numbers is an array of objects ( Field - ID:Number ,name : String, srno : String)
         * 
         * @apiSuccessExample {json} Success-Response:
         *{

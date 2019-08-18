@@ -26,13 +26,16 @@ login: function(req, res, next) {
                   delete userI
                   let userInformation = {};
                   userInformation = userInfo;
+                  console.log(userInformation)
                   userRoleModel.findOne({_id:userInfo.RoleId},function(err,result){
                      if(result){
                         roleName = result.RoleName;
                         res.json({status:"success", message: "Login Successfully!!!", data:{user: userInfo, token:token,userRole :roleName}});
                      }
                      else
-                        console.log(err)
+                        res.json({status:"success", message: "Something went wrong!!!", data:err});
+                   
+                        // console.log(err)
                   });
                }else{
                   res.json({status:"error", message: "Invalid email/password!!!", data:null});

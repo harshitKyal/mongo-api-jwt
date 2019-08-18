@@ -21,22 +21,34 @@ const ocListSchema = new Schema({
     // required: true
 },
  Priority : {
+    _id:{
+        type:String,
+    },
      name : {
         type :String,
         trim : true ,
      },
     },
  CustomerType :{
+    _id:{
+        type:String,
+    },
      name:{
          type:String ,
      },
     },
  BranchID :{
+    _id:{
+        type:String,
+    },
      name :{
          type:String ,
      },
  },
  ProductID :{
+    _id:{
+        type:String,
+    },
      name:{
          type:String ,
      },
@@ -54,12 +66,15 @@ SpareIDs :[
     }
 ],
 Customer :{
+        _id:String,
         name:String,
         city:String,
         contactNumber:String
     },
 Status:{
-    name:String ,
+    name:{
+        type:String ,
+    }
 },
 CreatedBy:{
     type:String,
@@ -75,6 +90,7 @@ UpdatedDate:{
 },
 SerialNumbers:[
     {
+        ID:Number,
         name:String,
         srno:String,
 

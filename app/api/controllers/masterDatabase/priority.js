@@ -7,7 +7,7 @@ getAll: function(req, res, next) {
    if (err){
     next(err);
    } else{
-    res.json({status:"success", message: "SubAssembly list Fetched!!!", data:{priorityList: priorityList}});
+    res.json({status:"success", message: "Product Ids list Fetched!!!", data:{priorityList: priorityList}});
        
    }
 });
