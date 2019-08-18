@@ -9,9 +9,9 @@ router.post('/updateStatus', ocListController.updateStatus);
         * @apiVersion 0.0.1
         * @apiGroup OC List
         *
-        * @apiParam {String} ocId Oc Id to update oc .(Oc ID should be pass as a body parameter - required and unique)
+        * @apiParam {String} ocId Oc Id to update oc .(Oc ID should be pass as a body parameter - required )
         * @apiParam {String} roleName roleName should be pass as a body parameter-required.
-        * @apiParam {action} action to specify update or close action of OC. action should be pass as a body parameter - required.
+        * @apiParam {String} action to specify update or close action of OC. action should be pass as a body parameter - required.
         * @apiParam {Boolean} installationComplete installation Complete should pass as a body parameter.
         * @apiParam {Date} installationDate installation Date should pass as a body parameter.
         * @apiParam {String} branchName branch Name  should pass as a body parameter.

@@ -37,7 +37,7 @@ module.exports = {
          // If success //
          // console.log(success)
          if (success)
-            res.json({status:"success", message: "OC Status updated Successfully!!!", data:success});
+            res.json({status:"success", message: "OC Status updated Successfully!!!", data:null});
          else 
             res.json({status:"error", message: "Invalid OC ID", data:null});
 
