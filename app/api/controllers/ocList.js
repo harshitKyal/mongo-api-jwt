@@ -48,7 +48,19 @@ module.exports = {
             }
          }
       }
-      if (req.body.Priority) {
+      console.log("sad")
+      if ((roleName == "Admin" || roleName == "QA Team" ) && req.body.Priority) {
+         console.log(req.body.Priority)
+         ocListModel.find({"Priority.name":req.body.Priority},function(err,result){
+            if(result.length)
+               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+            else
+               res.json({status:"error",message:"No Oc List found!!!",data:null})
+                  
+         });
+         
+      }
+      else if (req.body.Priority) {
          ocListModel.find({"Status.name":Status,"Priority.name":req.body.Priority},function(err,result){
             if(result.length)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
