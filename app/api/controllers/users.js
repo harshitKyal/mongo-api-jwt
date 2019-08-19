@@ -1,10 +1,11 @@
 const userModel = require('../models/users');
 const userRoleModel = require('../models/userRole');
+const branchModel = require('../models/masterDatabase/branch');
+
 const bcrypt = require('bcrypt'); 
 const jwt = require('jsonwebtoken');
 module.exports = {
  create: function(req, res, next) {
-  
   userModel.create({ name: req.body.name, email: req.body.email, password: req.body.password ,RoleId:req.body.RoleId}, function (err, result) {
       if (err)
        res.json({status:"error",message:"Something is wrong",data:null})
@@ -24,27 +25,31 @@ login: function(req, res, next) {
                   let userI = userInfo;
                   let roleName ;
                   delete userI
-                  let userInformation = {};
+                  let branchName;
                   userInformation = userInfo;
-                  console.log(userInformation)
                   userRoleModel.findOne({_id:userInfo.RoleId},function(err,result){
                      if(result){
-                        roleName = result.RoleName;
-                        res.json({status:"success", message: "Login Successfully!!!", data:{user: userInfo, token:token,userRole :roleName}});
+                        roleName=result.RoleName;
+                        res.json({status:"error", message: "Something went wrong!!!", data:err}); 
+                         
+                        // if (userInfo.branchId){
+                        //    branchModel.findOne({_id:userInfo.branchId},function(err,result){
+                        //       if(result){
+                        //          branchName = result.name;
+                        //          res.json({status:"success", message: "Login Successfully!!!", data:{user: userInfo, token:token,userRole :roleName,branchName:branchName}});
+                        //       }
+                        //       else
+                        //          res.json({status:"error", message: "Something went wrong!!!", data:err}); 
+                        //    });
+                        // }else
+                        //    res.json({status:"success", message: "Login Successfully!!!", data:{user: userInfo, token:token,userRole :roleName}});  
                      }
-                     else
-                        res.json({status:"error", message: "Something went wrong!!!", data:err});
-                   
-                        // console.log(err)
-                  });
-               }else{
+                  }); 
+               }else
                   res.json({status:"error", message: "Invalid email/password!!!", data:null});
-               }
             }
-            else{
+            else
                res.json({status:"error", message: "Invalid email/password!!!", data:null});
-            }
-         
     });
  },
  getAll: function(req, res, next) {

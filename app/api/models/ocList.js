@@ -62,14 +62,24 @@ const ocListSchema = new Schema({
  ],
 SpareIDs :[
     {
-        name:String,
+        name:{
+            type:String
+        }
     }
 ],
 Customer :{
-        _id:String,
-        name:String,
-        city:String,
-        contactNumber:String
+        _id:{
+            type:String
+        },
+        name:{
+            type:String,
+        },
+        city:{
+            type:String,
+        },
+        contactNumber:{
+            type:String
+        }
     },
 Status:{
     name:{
@@ -114,12 +124,34 @@ Installation:{
 },
 SerialNumbers:[
     {
-        ID:String,
-        name:String,
-        srno:String,
+        ID:{
+            type:String,
+        },
+        name:{
+            type:String,
+        },
+        srno:{
+            type:String,
+        }
 
     }
 ],
+StatusLog:[
+    {
+        UserName:{
+            type:String,
+        },
+        PreviousStatus:{
+            type:String
+        },
+        ChangedStatus:{
+            type:String,
+        },
+        Date:{
+            type:Date
+        }
+    }
+]
 
 });
 

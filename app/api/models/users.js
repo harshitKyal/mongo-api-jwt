@@ -25,6 +25,9 @@ const UserSchema = new Schema({
   type: String,
   trim: true,
   required:true 
+ },
+ branchId:{
+     type:String
  }
 });
 // hash user password before saving into database

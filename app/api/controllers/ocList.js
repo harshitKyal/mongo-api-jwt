@@ -9,7 +9,8 @@ module.exports = {
       let ocId = req.body.ocId;
       let branchName = req.body.branchName;
       let updateStatus;
-      
+      let userName = req.body.userName;
+
       if (installationComplete)
            updateStatus="Closed";
       else if ((roleName == "Admin" || roleName == "QA Team") && status=="New") 
@@ -21,12 +22,24 @@ module.exports = {
             updateStatus = "Installation Scheduled"; 
       }else
             updateStatus= "Closed";
-      
-
+      let d = new Date()
+      query={
+         "$push": {
+            "StatusLog": {
+                  "UserName": userName,
+                  "PreviousStatus": status,
+                  "ChangedStatus":updateStatus,
+                  "Date":d
+            }
+         },
+         "Status":{
+            "name":updateStatus
+         }
+      }
       // console.log(updateStatus)
       ocListModel.findOneAndUpdate({
          _id: ocId
-     }, {"Status.name":updateStatus}, function(err, success) {
+     }, query, function(err, success) {
          // If success //
          // console.log(success)
          if (success)
@@ -77,32 +90,49 @@ module.exports = {
          if(roleName == "Sales Team")
             Status = "In Progress - Sales"
          else if (roleName = "Branch/Dealer")
-            Status = "In Progress - Branch/Dealer"
+            Status = "In Progress - Branch/Dealer",
+            
          query= {
             "Status":{
                "name":Status
             }
          }
       }
-      if ((roleName == "Admin" || roleName == "QA Team" ) && req.body.Priority) {
-         ocListModel.find({"Priority.name":req.body.Priority},function(err,result){
+      if (req.body.Priority) {
+         if (roleName == "Admin" || roleName == "QA Team" ) {
+            ocListModel.find({"Priority.name":req.body.Priority},function(err,result){
+               if(result)
+                  res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+               else
+                  res.json({status:"error",message:"No Oc List found!!!",data:err})
+                     
+            });
+            
+         }else if (roleName == "Branch/Dealer") {
+            ocListModel.find({"Status.name":Status,"Priority.name":req.body.Priority,"BranchID._id":req.body.branchId},function(err,result){
+               if(result)
+                  res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+               else
+                  res.json({status:"error",message:"No Oc List found!!!",data:err})
+                     
+            });
+         }else if(req.body.Priority) {
+            ocListModel.find({"Status.name":Status,"Priority.name":req.body.Priority},function(err,result){
+               if(result)
+                  res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+               else
+                  res.json({status:"error",message:"No Oc List found!!!",data:err})
+                     
+            });
+         }
+      }else if (roleName == "Branch/Dealer") {
+         ocListModel.find({"Status.name":Status,"BranchID._id":req.body.branchId},function(err,result){
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
                res.json({status:"error",message:"No Oc List found!!!",data:err})
                   
          });
-         
-      }
-      else if (req.body.Priority) {
-         ocListModel.find({"Status.name":Status,"Priority.name":req.body.Priority},function(err,result){
-            if(result)
-               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
-            else
-               res.json({status:"error",message:"No Oc List found!!!",data:err})
-                  
-         });
-         // query.Priority.name = req.body.Priority
       }else{
          ocListModel.find(query,function(err,result){
             if(result)
@@ -112,14 +142,6 @@ module.exports = {
                   
          });
       }
-      // console.log(query)
-      // ocListModel.find(query,function(err,result){
-      //    if(result.length)
-      //       res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
-      //    else
-      //       res.json({status:"error",message:"No Oc List found!!!",data:null})
-               
-      // });
    },
    create: function(req, res,next) {
 
@@ -175,31 +197,66 @@ module.exports = {
 
       })
    },
+   getClosedOCs: function(req, res, next) {
+      let roleName = req.body.roleName;
+      let branchId = req.body.branchId;
+      let query = {}
+      if(roleName =="Branch/Dealer") {
+         ocListModel.find({"Status.name":"Closed","BranchID._id":branchId},function(err, ocList){
+            if (err) 
+               next(err)
+               else 
+               res.json({status:"success", message: "OC List fetched!!!", data:{ocList: ocList}});
+      
+            })
+      }else{
+         ocListModel.find({"Status.name":"Closed"},function(err, ocList){
+            if (err) 
+               next(err)
+               else 
+               res.json({status:"success", message: "OC List fetched!!!", data:{ocList: ocList}});
+      
+            })
+      }
+   },
    updateOC:function(req, res,next) {
 
+         let d = new Date()
          let roleName = req.body.roleName;
          let updateStatus;
          let ocList = req.body;
-         
+         let status  = req.body.status
+         let userName = req.body.userName
+         let ChangeStausLog;
          if(req.body.Installation){
             let installationDate = req.body.Installation.InstallationDate;
-         
             if(roleName == "Branch/Dealer"){
-               if(installationDate)
+               if(installationDate){
                   updateStatus="Installation Scheduled";
+                  ocList.Status={};
+                  ocList.Status.name = updateStatus;
+                  ChangeStausLog={
+                     "$push": {
+                        "StatusLog": {
+                            "UserName": userName,
+                            "PreviousStatus": status,
+                            "ChangedStatus":updateStatus,
+                            "Date":d
+                        }
+                    },
+                  }
+               }
             }
-            ocList.Status={};
-            ocList.Status.name = updateStatus;
+            
          }
-         
-         // console.log(ocList)
-         // Find a particular one inside the products model and then update it //
+         let update = Object.assign(ocList, ChangeStausLog);
+         console.log(update)
          ocListModel.findOneAndUpdate({
              _id: req.body._id
-         }, ocList, function(err, success) {
+         },update, function(err, success) {
              // If success //
              if (success)
-               res.json({status:"success", message: "OC Updated Successfully!!!", data:null});
+               res.json({status:"success", message: "OC Updated Successfully!!!", data:success});
              else 
              res.json({status:"error", message: "Invalid OC ID", data:null});
 
