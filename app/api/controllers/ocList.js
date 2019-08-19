@@ -5,30 +5,23 @@ module.exports = {
 
       let roleName = req.body.roleName;
       let status = req.body.status;
-      let action = req.body.action;
       let installationComplete = req.body.installationComplete;
-      let installationDate = req.body.installationDate;
       let ocId = req.body.ocId;
       let branchName = req.body.branchName;
       let updateStatus;
-
-      if (installationComplete){
-         updateStatus="Closed";
-      }else if (action == "Update" && roleName == "Branch/Dealer"){
-         if(installationDate) {
-           updateStatus="Installation Scheduled";
-         }
-
-      }else if (action == "Close"){
-         if(roleName=="Sales"){
-            if(branchName){
-               updateStatus = "Installation Scheduled"   
-            }else{
-               updateStatus="In Progress - Branch/Dealer";
-            }
-         }else
-            updateStatus= "Close";
-      }
+      
+      if (installationComplete)
+           updateStatus="Closed";
+      else if ((roleName == "Admin" || roleName == "QA Team") && status=="New") 
+            updateStatus = "In Progress - Sales";
+      else if(roleName=="Sales"){
+         if(branchName)
+            updateStatus="In Progress - Branch/Dealer";
+         else
+            updateStatus = "Installation Scheduled"; 
+      }else
+            updateStatus= "Closed";
+      
 
       // console.log(updateStatus)
       ocListModel.findOneAndUpdate({
@@ -183,9 +176,23 @@ module.exports = {
       })
    },
    updateOC:function(req, res,next) {
-      
-         var ocList = req.body;
-         console.log(req.body._id)
+
+         let roleName = req.body.roleName;
+         let updateStatus;
+         let ocList = req.body;
+         
+         if(req.body.Installation){
+            let installationDate = req.body.Installation.InstallationDate;
+         
+            if(roleName == "Branch/Dealer"){
+               if(installationDate)
+                  updateStatus="Installation Scheduled";
+            }
+            ocList.Status={};
+            ocList.Status.name = updateStatus;
+         }
+         
+         // console.log(ocList)
          // Find a particular one inside the products model and then update it //
          ocListModel.findOneAndUpdate({
              _id: req.body._id

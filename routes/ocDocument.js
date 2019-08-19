@@ -30,7 +30,7 @@ router.post('/save', ocDocumentController.save);
         */
 router.post('/getByOCID', ocDocumentController.getByOCID);
 /**
-        * @api {get} getByOCID/ get document list by OC ID
+        * @api {post} ocDocument/getByOCID get document list by OC ID
         * @apiVersion 0.0.1
         * @apiGroup OC Document
         *

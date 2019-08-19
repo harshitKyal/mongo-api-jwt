@@ -20,9 +20,9 @@ module.exports = {
  getByOCID: function(req, res, next) {
 
    ocDocumentModel.find( {ocid:req.body.ocid},function(err,result){
-      if (result.length)
+      if (result)
          res.json({status:"success",message:"Oc with Documents found!!!",data:{ocDocument:result}})
-      else 
+      else if (err)
          res.json({status:"error",message:"Invalid OC ID!!!",data:null})
    });
 
