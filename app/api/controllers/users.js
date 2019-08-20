@@ -27,11 +27,12 @@ login: function(req, res, next) {
                   delete userI
                   let branchName;
                   userInformation = userInfo;
+                  console.log(userInfo.RoleId)
                   userRoleModel.findOne({_id:userInfo.RoleId},function(err,result){
                      if(result){
                         roleName=result.RoleName;
-                        res.json({status:"error", message: "Something went wrong!!!", data:err}); 
-                         
+                        res.json({status:"success", message: "Login Successfully!!!", data:{user: userInfo, token:token,userRole :roleName,branchName:branchName}});
+                        //       
                         // if (userInfo.branchId){
                         //    branchModel.findOne({_id:userInfo.branchId},function(err,result){
                         //       if(result){
@@ -44,6 +45,9 @@ login: function(req, res, next) {
                         // }else
                         //    res.json({status:"success", message: "Login Successfully!!!", data:{user: userInfo, token:token,userRole :roleName}});  
                      }
+                     else
+                        res.json({status:"error", message: "Login Successfully!!!", data:err});
+                        //      
                   }); 
                }else
                   res.json({status:"error", message: "Invalid email/password!!!", data:null});
