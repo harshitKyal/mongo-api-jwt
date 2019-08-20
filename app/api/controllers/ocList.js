@@ -239,7 +239,7 @@ module.exports = {
                      "$push": {
                         "StatusLog": {
                             "UserName": userName,
-                            "PreviousStatus": status,
+                            "PreviousStatus": "In Progress - Branch/Dealer",
                             "ChangedStatus":updateStatus,
                             "Date":d
                         }
@@ -249,6 +249,7 @@ module.exports = {
             }
             
          }
+         // console.log(update)
          let update = Object.assign(ocList, ChangeStausLog);
          console.log(update)
          ocListModel.findOneAndUpdate({
