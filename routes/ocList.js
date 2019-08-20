@@ -11,7 +11,8 @@ router.post('/getOCArchieves', ocListController.getClosedOCs);
         *
         * @apiParam {String} roleName to get OC List. (Should pass as a body parameter.- required)
         * @apiParam {String} branchId for branch group user. (Should pass as a body parameter. - optional)
-        * 
+        * @apiParam {String} Priority for Oc List. (Should pass as a body parameter. - optional)
+        
         * @apiSuccessExample {json} Success-Response:
         *{
         "status": "success",

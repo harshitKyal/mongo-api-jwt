@@ -87,17 +87,21 @@ module.exports = {
       let Status =null;
       let query = {}
       if(roleName !== "Admin" && roleName !== "QA Team") {
+         console.log("fsdf")
          if(roleName == "Sales Team")
             Status = "In Progress - Sales"
          else if (roleName = "Branch/Dealer")
-            Status = "In Progress - Branch/Dealer",
-            
-         query= {
-            "Status":{
-               "name":Status
+            Status = "In Progress - Branch/Dealer";
+         
+            query= {
+               "Status":{
+                  "name":Status,
+               }
             }
-         }
+         console.log("asdads",query)
       }
+      console.log(roleName)
+      console.log(query)
       if (req.body.Priority) {
          if (roleName == "Admin" || roleName == "QA Team" ) {
             ocListModel.find({"Priority.name":req.body.Priority},function(err,result){
@@ -200,23 +204,44 @@ module.exports = {
    getClosedOCs: function(req, res, next) {
       let roleName = req.body.roleName;
       let branchId = req.body.branchId;
-      let query = {}
-      if(roleName =="Branch/Dealer") {
-         ocListModel.find({"Status.name":"Closed","BranchID._id":branchId},function(err, ocList){
-            if (err) 
-               next(err)
-               else 
-               res.json({status:"success", message: "OC List fetched!!!", data:{ocList: ocList}});
-      
-            })
-      }else{
-         ocListModel.find({"Status.name":"Closed"},function(err, ocList){
-            if (err) 
-               next(err)
-               else 
-               res.json({status:"success", message: "OC List fetched!!!", data:{ocList: ocList}});
-      
-            })
+
+      if(req.body.Priority){
+         if(roleName =="Branch/Dealer") {
+            ocListModel.find({"Priority.name":req.body.Priority,"Status.name":"Closed","BranchID._id":branchId},function(err, ocList){
+               if (err) 
+                  next(err)
+                  else 
+                  res.json({status:"success", message: "OC List fetched!!!", data:{ocList: ocList}});
+         
+               })
+         }else{
+            ocListModel.find({"Priority.name":req.body.Priority,"Status.name":"Closed"},function(err, ocList){
+               if (err) 
+                  next(err)
+                  else 
+                  res.json({status:"success", message: "OC List fetched!!!", data:{ocList: ocList}});
+         
+               })
+         }   
+      }
+      else{
+         if(roleName =="Branch/Dealer") {
+            ocListModel.find({"Status.name":"Closed","BranchID._id":branchId},function(err, ocList){
+               if (err) 
+                  next(err)
+                  else 
+                  res.json({status:"success", message: "OC List fetched!!!", data:{ocList: ocList}});
+         
+               })
+         }else{
+            ocListModel.find({"Status.name":"Closed"},function(err, ocList){
+               if (err) 
+                  next(err)
+                  else 
+                  res.json({status:"success", message: "OC List fetched!!!", data:{ocList: ocList}});
+         
+               })
+         }
       }
    },
    updateOC:function(req, res,next) {
