@@ -4,12 +4,13 @@ var multer = require('multer');
 module.exports = {
  save: function(req, res, next) {
 
+   let fileInfo = req.body.FileInfo;
    var ocDocument = new ocDocumentModel ({
-      ocid:req.body.ocid, // To generate a unique id //
-      documentname: req.body.documentname,
-      uploadedby: req.body.uploadedby,
-      uploadeddate: req.body.uploadeddate,
-      filePath:"fileUploads/" + req.body.documentname
+      ocid:fileInfo.ocid, // To generate a unique id //
+      documentname: fileInfo.documentname,
+      uploadedby: fileInfo.uploadedby,
+      uploadeddate: fileInfo.uploadeddate,
+      filePath:"fileUploads/" + fileInfo.documentname
    });
 
    ocDocument.save(function(err,result) {
