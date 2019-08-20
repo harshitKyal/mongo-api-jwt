@@ -261,7 +261,7 @@ module.exports = {
          let ChangeStausLog;
          if(req.body.Installation){
             let installationDate = req.body.Installation.installationDate;
-            if(roleName == "Branch/Dealer"){
+            if(roleName === "Branch/Dealer"){
                if(installationDate){
                   updateStatus="Installation Scheduled";
                   ocList.Status={};
@@ -290,7 +290,7 @@ module.exports = {
              if (success)
                res.json({status:"success", message: "OC Updated Successfully!!!", data:success});
              else 
-             res.json({status:"error", message: "Invalid OC ID", data:null});
+             res.json({status:"error", message: "Invalid OC ID", data:err});
 
             });
    },
