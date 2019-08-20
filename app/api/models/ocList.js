@@ -99,7 +99,7 @@ UpdatedDate:{
     type:Date,
 },
 Installation:{
-    InstallationDate:{
+    installationDate:{
         type:Date,
     },
     installationComplete :{
@@ -108,7 +108,7 @@ Installation:{
     invoiceDate:{
         type:Date,
     },
-    InstallationTechnician:{
+    installationTechnician:{
         type:String,
     },
     technicianContact:{

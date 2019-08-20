@@ -97,10 +97,7 @@ module.exports = {
                   "name":Status,
                }
             }
-         // console.log("asdads",query)
       }
-      // console.log(roleName)
-      // console.log(query)
       if (req.body.Priority) {
          if (roleName == "Admin" || roleName == "QA Team" ) {
             ocListModel.find({"Priority.name":req.body.Priority },{ "Status.name" :{ $ne:"Closed" } },function(err,result){
