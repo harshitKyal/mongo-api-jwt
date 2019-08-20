@@ -127,7 +127,7 @@ router.post('/create', ocListController.create);
         * @apiParam {String} ProductID product Ids is an object ( Field - _id:String ,name :String.)
         * @apiParam {String} SubAssemblyIDs branch Ids is an array of objects ( Field -_id:String , name :String.)
         * @apiParam {String} SpareIDs spare Ids is an object ( Field - _id:String ,name :String.)
-        * @apiParam {String} Installation installtion is an object.(Field - InstallationDate:Date,installationComplete:boolean,invoiceDate:Date,InstallationTechnician:String,technicianContact:String,transport:String,invoiceNumber:String)
+        * @apiParam {String} Installation installtion is an object.(Field - installationDate:Date,installationComplete:boolean,invoiceDate:Date,InstallationTechnician:String,technicianContact:String,transport:String,invoiceNumber:String)
         * @apiParam {String} Status Status is an object ( Field - name :String.)
         * @apiParam {String} CreatedBy created by (person who created the list)
         * @apiParam {String} UpdatedBy updated by ( person name who updated the list)
@@ -209,7 +209,7 @@ router.post('/getByOCNumber', ocListController.getByOCNumber);
                 },
                 "installation":{
                     "_id":"String",
-                    "InstallationDate":Date",
+                    "installationDate":Date",
                     "installationComplete":"String",
                     "invoiceDate":"Date",
                     "InstallationTechnician":"String",

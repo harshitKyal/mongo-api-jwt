@@ -98,7 +98,7 @@ module.exports = {
                }
             }
       }
-      console.log(query)
+      // console.log(query)
       if (req.body.Priority) {
          if (roleName == "Admin" || roleName == "QA Team" ) {
             ocListModel.find({"Priority.name":req.body.Priority , "Status.name" :{ $ne:"Closed" } },function(err,result){
@@ -260,7 +260,7 @@ module.exports = {
          let userName = req.body.userName
          let ChangeStausLog;
          if(req.body.Installation){
-            let installationDate = req.body.Installation.InstallationDate;
+            let installationDate = req.body.Installation.installationDate;
             if(roleName == "Branch/Dealer"){
                if(installationDate){
                   updateStatus="Installation Scheduled";
@@ -278,11 +278,11 @@ module.exports = {
                   }
                }
             }
-            
+            console.log(ocList)
          }
          // console.log(update)
          let update = Object.assign(ocList, ChangeStausLog);
-         console.log(update)
+         console.log("dsadsadas",update)
          ocListModel.findOneAndUpdate({
              _id: req.body._id
          },update, function(err, success) {
