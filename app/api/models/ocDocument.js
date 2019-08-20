@@ -17,7 +17,7 @@ uploadedby:{
 uploadeddate :{
     type: Date,
 },
-dochash:{
+filePath:{
     type:String,
 }
 

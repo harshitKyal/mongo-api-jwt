@@ -3,7 +3,7 @@ var multer = require('multer');
 
 module.exports = {
  save: function(req, res, next) {
-
+   
    let fileInfo = JSON.parse(req.body.FileInfo);
    var ocDocument = new ocDocumentModel ({
       ocid:fileInfo.ocid, // To generate a unique id //
@@ -12,7 +12,7 @@ module.exports = {
       uploadeddate: fileInfo.uploadeddate,
       filePath:"fileUploads/" + fileInfo.documentname
    });
-
+console.log("sadsa",ocDocument)
    ocDocument.save(function(err,result) {
       if (err)
         res.json({status:"error",message:"something looks wrong!!!",data:err});
