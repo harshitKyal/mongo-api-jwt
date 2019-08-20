@@ -98,6 +98,7 @@ module.exports = {
                }
             }
       }
+      console.log(query)
       if (req.body.Priority) {
          if (roleName == "Admin" || roleName == "QA Team" ) {
             ocListModel.find({"Priority.name":req.body.Priority },{ "Status.name" :{ $ne:"Closed" } },function(err,result){
@@ -127,6 +128,15 @@ module.exports = {
          }
       }else if (roleName == "Branch/Dealer") {
          ocListModel.find({"Status.name":Status,"BranchID._id":req.body.branchId},function(err,result){
+            if(result)
+               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+            else
+               res.json({status:"error",message:"No Oc List found!!!",data:err})
+                  
+         });
+      }
+      else if (roleName == "Sales Team") {
+         ocListModel.find({"Status.name":Status},function(err,result){
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
