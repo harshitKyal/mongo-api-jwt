@@ -15,7 +15,7 @@ module.exports = {
            updateStatus="Closed";
       else if ((roleName == "Admin" || roleName == "QA Team") && status=="New") 
             updateStatus = "In Progress - Sales";
-      else if(roleName=="Sales"){
+      else if(roleName=="Sales Team"){
          if(branchName)
             updateStatus="In Progress - Branch/Dealer";
          else
@@ -87,24 +87,23 @@ module.exports = {
       let Status =null;
       let query = {}
       if(roleName !== "Admin" && roleName !== "QA Team") {
-         console.log("fsdf")
+         // console.log("fsdf")
          if(roleName == "Sales Team")
             Status = "In Progress - Sales"
          else if (roleName = "Branch/Dealer")
             Status = "In Progress - Branch/Dealer";
-         
             query= {
                "Status":{
                   "name":Status,
                }
             }
-         console.log("asdads",query)
+         // console.log("asdads",query)
       }
-      console.log(roleName)
-      console.log(query)
+      // console.log(roleName)
+      // console.log(query)
       if (req.body.Priority) {
          if (roleName == "Admin" || roleName == "QA Team" ) {
-            ocListModel.find({"Priority.name":req.body.Priority},function(err,result){
+            ocListModel.find({"Priority.name":req.body.Priority },{ "Status.name" :{ $ne:"Closed" } },function(err,result){
                if(result)
                   res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
                else
@@ -138,7 +137,7 @@ module.exports = {
                   
          });
       }else{
-         ocListModel.find(query,function(err,result){
+         ocListModel.find({ "Status.name" :{ $ne:"Closed" }} ,function(err,result){
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
