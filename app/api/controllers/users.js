@@ -8,7 +8,7 @@ module.exports = {
  create: function(req, res, next) {
   userModel.create({ name: req.body.name, email: req.body.email, password: req.body.password ,RoleId:req.body.RoleId}, function (err, result) {
       if (err)
-       res.json({status:"error",message:"Something is wrong",data:null})
+       res.json({status:"error",message:"Something is wrong",data:err})
       else
        res.json({status: "success", message: "New User added successfully!!!", data: null});
       
@@ -19,6 +19,7 @@ login: function(req, res, next) {
             if (err) {
             next(err);
             } else if(userInfo) {
+              
                if(bcrypt.compareSync(req.body.password, userInfo.password)) {
                   const token = jwt.sign({id: userInfo._id}, req.app.get('secretKey'), { expiresIn: '1h' });
                   delete userInfo["password"]

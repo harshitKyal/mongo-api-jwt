@@ -1,7 +1,18 @@
 const express = require('express');
+var multer = require('multer');
 const router = express.Router();
 const ocDocumentController = require('../app/api/controllers/ocDocument');
-router.post('/save', ocDocumentController.save);
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'fileUploads')
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+ });
+ var upload = multer({storage: storage});
+
+router.post('/save',upload.single('file'), ocDocumentController.save);
 /**
         * @api {post} ocDocument/save upload Document
         * @apiVersion 0.0.1
