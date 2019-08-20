@@ -101,7 +101,7 @@ module.exports = {
       console.log(query)
       if (req.body.Priority) {
          if (roleName == "Admin" || roleName == "QA Team" ) {
-            ocListModel.find({"Priority.name":req.body.Priority },{ "Status.name" :{ $ne:"Closed" } },function(err,result){
+            ocListModel.find({"Priority.name":req.body.Priority , "Status.name" :{ $ne:"Closed" } },function(err,result){
                if(result)
                   res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
                else
