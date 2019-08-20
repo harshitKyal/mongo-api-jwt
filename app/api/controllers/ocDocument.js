@@ -4,7 +4,7 @@ var multer = require('multer');
 module.exports = {
  save: function(req, res, next) {
 
-   let fileInfo = req.body.FileInfo;
+   let fileInfo = JSON.parse(req.body.FileInfo);
    var ocDocument = new ocDocumentModel ({
       ocid:fileInfo.ocid, // To generate a unique id //
       documentname: fileInfo.documentname,
