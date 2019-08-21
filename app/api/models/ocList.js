@@ -46,6 +46,9 @@ const ocListSchema = new Schema({
      },
  },
  ProductID :{
+     code:{
+         type:String,
+     },
     _id:{
         type:String,
     },
@@ -58,12 +61,18 @@ const ocListSchema = new Schema({
          name :{
              type:String,
          },
+         code:{
+             type:String,
+         }
      }
  ],
 SpareIDs :[
     {
         name:{
-            type:String
+            type:String,
+        },
+        code:{
+            type:String,
         }
     }
 ],

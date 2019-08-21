@@ -23,12 +23,14 @@ router.post('/getOCArchieves', ocListController.getClosedOCs);
                 "SubAssemblyIDs": [
                     {
                         "_id": "String",
+                        "code":"String",
                         "name": "String"
                     }
                 ],
                 "SpareIDs":[
                     {
                         "_id": "5d57f8bd4a56a74071c4824d",
+                        "code":"String",
                         "name": "testing1"
                     }
                 ],
@@ -60,6 +62,7 @@ router.post('/getOCArchieves', ocListController.getClosedOCs);
                 },
                 "ProductID":{
                     "_id":"String",
+                    "code":"String",
                     "name":"String"
                 },
                 "Status":{
@@ -168,12 +171,14 @@ router.post('/getByOCNumber', ocListController.getByOCNumber);
                 "SubAssemblyIDs": [
                     {
                         "_id": "String",
+                        "code":"String",
                         "name": "String"
                     }
                 ],
                 "SpareIDs":[
                     {
                         "_id": "5d57f8bd4a56a74071c4824d",
+                        "code":"String",
                         "name": "testing1"
                     }
                 ],
@@ -205,6 +210,7 @@ router.post('/getByOCNumber', ocListController.getByOCNumber);
                 },
                 "ProductID":{
                     "_id":"String",
+                    "code":"String",
                     "name":"String"
                 },
                 "installation":{
@@ -257,12 +263,14 @@ router.post('/', ocListController.getByRoleName);
                 "SubAssemblyIDs": [
                     {
                         "_id": "String",
+                        "code":"String",
                         "name": "String"
                     }
                 ],
                 "SpareIDs":[
                     {
                         "_id": "5d57f8bd4a56a74071c4824d",
+                        "code":"String",
                         "name": "testing1"
                     }
                 ],
@@ -294,6 +302,7 @@ router.post('/', ocListController.getByRoleName);
                 },
                 "ProductID":{
                     "_id":"String",
+                    "code":"String",
                     "name":"String"
                 },
                 "Status":{

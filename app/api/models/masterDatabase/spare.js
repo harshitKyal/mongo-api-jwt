@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 mongoose.pluralize(null);
 const Schema = mongoose.Schema;
 const spareSchema = new Schema({
+code:{
+    type:String,
+    required :true,
+},
  name: {
   type: String,  
   required: true,

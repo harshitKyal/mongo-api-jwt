@@ -110,15 +110,15 @@ module.exports = {
             });
             
          }else if (roleName == "Branch/Dealer") {
-            ocListModel.find({"Status.name":Status,"Priority.name":req.body.Priority,"BranchID._id":req.body.branchId},function(err,result){
+            ocListModel.find({"Status.name" :{ $ne:["Closed","In Progress - Sales","New"] },"Priority.name":req.body.Priority,"BranchID._id":req.body.branchId},function(err,result){
                if(result)
                   res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
                else
                   res.json({status:"error",message:"No Oc List found!!!",data:err})
                      
             });
-         }else if(req.body.Priority) {
-            ocListModel.find({"Status.name":Status,"Priority.name":req.body.Priority},function(err,result){
+         }else if(roleName == "Sales Team") {
+            ocListModel.find({"Status.name" :{ $ne:["Closed","New"] },"Priority.name":req.body.Priority},function(err,result){
                if(result)
                   res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
                else
@@ -127,7 +127,7 @@ module.exports = {
             });
          }
       }else if (roleName == "Branch/Dealer") {
-         ocListModel.find({"Status.name":Status,"BranchID._id":req.body.branchId},function(err,result){
+         ocListModel.find({"Status.name" :{ $ne:["Closed","In Progress - Sales","New"] },"BranchID._id":req.body.branchId},function(err,result){
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
@@ -136,7 +136,7 @@ module.exports = {
          });
       }
       else if (roleName == "Sales Team") {
-         ocListModel.find({"Status.name":Status},function(err,result){
+         ocListModel.find({"Status.name" :{ $ne:["Closed","New"] }},function(err,result){
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else

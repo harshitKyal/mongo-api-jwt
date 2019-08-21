@@ -1,13 +1,41 @@
+
+// console.log(fileUploadPath)
 const express = require('express');
 var multer = require('multer');
+const fileUploadPath = require('../config/config')
 const router = express.Router();
+var fs = require('fs');
+var mkdirp = require('mkdirp');
+
 const ocDocumentController = require('../app/api/controllers/ocDocument');
+// var month_name = function(dt){
+//   mlist = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+//     return mlist[dt.getMonth()];
+//   };
 var storage = multer.diskStorage({
+  
     destination: (req, file, cb) => {
-      cb(null, 'fileUploads')
+      
+      var dateObj = new Date();
+      let mlist = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+      let Yearr = dateObj.getUTCFullYear();
+      let monthName =  dateObj.getMonth() ;  
+      monthName = mlist[monthName];
+      let dateName = dateObj.getDate();
+
+      var dir = "./" + fileUploadPath.fileUploadPath + "/" + Yearr + "/" + monthName + "/" + dateName;
+      // console.log(dir)
+      mkdirp(dir, function(err) { 
+        cb(null, dir)
+        // path exists unless there was an error
+
+    });
     },
+    
+
     filename: (req, file, cb) => {
-      console.log(file)
+
       cb(null, file.originalname + '-' + Date.now())
     }
  });
