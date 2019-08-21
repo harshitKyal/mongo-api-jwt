@@ -10,7 +10,7 @@ module.exports = {
       let branchName = req.body.branchName;
       let updateStatus;
       let userName = req.body.userName;
-
+      console.log("installaion",installationComplete)
       if (installationComplete)
            updateStatus="Closed";
       else if ((roleName == "Admin" || roleName == "QA Team") && status=="New") 
@@ -36,7 +36,7 @@ module.exports = {
             "name":updateStatus
          }
       }
-      // console.log(updateStatus)
+      console.log("dsadsad",query)
       ocListModel.findOneAndUpdate({
          _id: ocId
      }, query, function(err, success) {
