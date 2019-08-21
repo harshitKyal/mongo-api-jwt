@@ -64,4 +64,36 @@ router.post('/login', userController.login);
 	    "data": null
 	   }
 	 */
+    router.post('/', userController.getAll);
+/**
+        * @api {post} users/ get all users
+        * @apiVersion 0.0.1
+        * @apiGroup user
+        *
+        *
+        * @apiSuccessExample {json} Success-Response:
+        *{
+        "status": "success",
+        "message": "user list found!!!",
+        "data": {
+            "user": {
+                "_id": "string"",
+                "name": "string",
+                "email": "string",
+                "password": "string",
+                "__v": "number"
+                },
+            "token": "string",
+            "userRole":"String"                
+        }
+
+        *}
+	  @apiErrorExample {json} Error-Response:
+	 *
+	 * {
+	    "status": "error",
+	    "message": "Invalid email/password!!!",
+	    "data": null
+	   }
+	 */
 module.exports = router;

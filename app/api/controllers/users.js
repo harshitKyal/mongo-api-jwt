@@ -62,7 +62,7 @@ login: function(req, res, next) {
      if (err) 
       next(err)
       else 
-      res.json({status:"success", message: "user Role List fetched!!!", data:{ocList: ocList}});
+      res.json({status:"success", message: "user List fetched!!!", data:{ocList: ocList}});
 
      })
     },
