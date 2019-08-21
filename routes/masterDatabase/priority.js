@@ -1,6 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const priorityController = require('../../app/api/controllers/masterDatabase/priority');
+router.post('/create', priorityController.create);
+/**
+        * @api {get} priority/create create priority
+        * @apiVersion 0.0.1
+        * @apiGroup masterDatabase
+        *
+        * @apiSuccessExample {json} Success-Response:
+        *{
+        "status": "success",
+        "message": "priority Created Successfully!!!",
+        "data": null
+        *}
+        *
+        @apiErrorExample {json} Error-Response:
+        *
+        * {
+        "status": "error",
+        "message": "not found",
+        "data": null
+        }
+        */
 router.get('/', priorityController.getAll);
 /**
         * @api {get} priority/ get priority list

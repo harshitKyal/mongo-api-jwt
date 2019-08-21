@@ -161,6 +161,8 @@ router.post('/getByOCNumber', ocListController.getByOCNumber);
         *
         * @apiParam {Number} OCNumber to get OC. (Should pass as a body parameter. - required)
         * @apiParam {String} roleName to get OC List. (Should pass as a body parameter. - required)
+        * @apiParam {String} branchId to get OC List. (Should pass as a body parameter. - required only if branch user)
+        
         * @apiSuccessExample {json} Success-Response:
         *{
         "status": "success",

@@ -43,15 +43,15 @@ var storage = multer.diskStorage({
 
 router.post('/save',upload.single('file'), ocDocumentController.save);
 /**
-        * @api {post} ocDocument/save upload Document
+        * @api {post} ocDocument/save upload Document (**formData)
         * @apiVersion 0.0.1
         * @apiGroup OC Document
         *
-        * @apiParam {String} ocid reference of OC .(OC ID should be pass as a body parameter - required)
-        * @apiParam {String} documentname name of uploaded file .(document name should be pass as a body parameter - required)
-        * @apiParam {String} uploadedby id of uploaded person .(uploaded by should be pass as a body parameter - required)
-        * @apiParam {Date} uploadeddate uploaded Date.(uploaded Date should be pass as a body parameter - required)
-        * @apiParam {String} dochash hash of uploaded file.(dochash should be pass as a body parameter - required)
+        * @apiParam {String} ocid reference of OC .(OC ID should be pass as a formData - required)
+        * @apiParam {String} documentname name of uploaded file .(document name should be pass as a formData parameter - required)
+        * @apiParam {String} uploadedby id of uploaded person .(uploaded by should be pass as a formData parameter - required)
+        * @apiParam {Date} uploadeddate uploaded Date.(uploaded Date should be pass as a formData parameter - required)
+        * @apiParam {String} filePath  of uploaded file.(filePath should be pass as a formData parameter - required)
         *
         * @apiSuccessExample {json} Success-Response:
         *{

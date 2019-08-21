@@ -12,5 +12,17 @@ getAll: function(req, res, next) {
    }
 });
  },
+ create: function(req, res, next) {
+  // let moviesList = [];
+  // console.log(req.body)
+  let priorityData = req.body
+  priorityModel.create( priorityData, function (err, result) {
+    if (err)
+     res.json({status:"error",message:"Something is wrong",data:err})
+    else
+     res.json({status: "success", message: "New Priority added successfully!!!", data: null});
+    
+  });
 
+ },
 }

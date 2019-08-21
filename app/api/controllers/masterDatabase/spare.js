@@ -12,4 +12,17 @@ getAll: function(req, res, next) {
    }
 });
  },
+ create: function(req, res, next) {
+  // let moviesList = [];
+  // console.log(req.body)
+  let spareData = req.body
+  spareModel.create( spareData, function (err, result) {
+    if (err)
+     res.json({status:"error",message:"Something is wrong",data:err})
+    else
+     res.json({status: "success", message: "New Spare added successfully!!!", data: null});
+    
+  });
+
+ },
 }

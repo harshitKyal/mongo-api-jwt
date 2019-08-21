@@ -13,6 +13,7 @@ router.post('/register', userController.create);
         * @apiParam {String} password Password for login.(password  should be pass as a body parameter - required)
         * @apiParam {String} email email to register.(Email should be pass as a body parameter - required)
         * @apiParam {String} roleId to assign role to user.(role Id should be pass as a body parameter - required)
+        * @apiParam {String} branchId to assign role to user.(Branch Id should be pass as a body parameter - required only if branch user)
         * 
         * @apiSuccessExample {json} Success-Response:
         *{
