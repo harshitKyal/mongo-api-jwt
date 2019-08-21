@@ -34,7 +34,8 @@ module.exports = {
          },
          "Status":{
             "name":updateStatus
-         }
+         },
+         "_id":ocId
       }
       console.log("dsadsad",query)
       ocListModel.findOneAndUpdate({
