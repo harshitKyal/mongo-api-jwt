@@ -34,10 +34,11 @@ module.exports = {
          },
          "Status":{
             "name":updateStatus
-         },
-         "_id":ocId
+         }
       }
-      console.log("dsadsad",query)
+      // console.log("dsadsad",query)
+
+      
       ocListModel.findOneAndUpdate({
          _id: ocId
      }, query, function(err, success) {
@@ -58,7 +59,7 @@ module.exports = {
       console.log("function callaed")
       console.log(req.body)
       if (roleName == "Admin" || roleName == "QA Team" ) {
-         ocListModel.find({ "Status.name" :{ $ne:"Closed" } ,"OCNumber":req.body.OCNumber},function(err,result){
+         ocListModel.find({ "OCNumber":req.body.OCNumber},function(err,result){
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
@@ -77,7 +78,7 @@ module.exports = {
             });
          }
       }else if(roleName == "Sales Team") {
-         ocListModel.find({"OCNumber":req.body.OCNumber,"Status.name" :{ $in:["In Progress - Sales","In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"]  }},function(err,result){
+         ocListModel.find({"OCNumber":req.body.OCNumber,"Status.name" :{ $in:["Closed","In Progress - Sales","In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"]  }},function(err,result){
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
