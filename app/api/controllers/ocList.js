@@ -69,7 +69,7 @@ module.exports = {
          
       } else if (roleName == "Branch/Dealer") {
          if(req.body.branchId){
-            ocListModel.find({"OCNumber":req.body.OCNumber,"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] },"BranchID._id":req.body.branchId},function(err,result){
+            ocListModel.find({"OCNumber":req.body.OCNumber,"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete","Closed"] },"BranchID._id":req.body.branchId},function(err,result){
                if(result)
                   res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
                else
