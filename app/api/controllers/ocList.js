@@ -57,7 +57,7 @@ module.exports = {
 
      
       if (roleName == "Admin" || roleName == "QA Team" ) {
-         ocListModel.find({ "Status.name" :{ $ne:"Closed" } ,"OCNumber":ewq.body.OCNumber},function(err,result){
+         ocListModel.find({ "Status.name" :{ $ne:"Closed" } ,"OCNumber":req.body.OCNumber},function(err,result){
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
@@ -67,7 +67,7 @@ module.exports = {
          
       }else if (roleName == "Branch/Dealer") {
          if(req.body.branchId){
-            ocListModel.find({"OCNumber":ewq.body.OCNumber,"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] },"BranchID._id":req.body.branchId},function(err,result){
+            ocListModel.find({"OCNumber":req.body.OCNumber,"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] },"BranchID._id":req.body.branchId},function(err,result){
                if(result)
                   res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
                else
@@ -76,7 +76,7 @@ module.exports = {
             });
          }
       }else if(roleName == "Sales Team") {
-         ocListModel.find({"OCNumber":ewq.body.OCNumber,"Status.name" :{ $in:["In Progress - Sales","In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"]  }},function(err,result){
+         ocListModel.find({"OCNumber":req.body.OCNumber,"Status.name" :{ $in:["In Progress - Sales","In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"]  }},function(err,result){
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
