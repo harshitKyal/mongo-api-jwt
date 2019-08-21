@@ -54,32 +54,36 @@ module.exports = {
    getByOCNumber: function(req, res, next) {
 
       let roleName = req.body.roleName;
-      let Status =null;
-      let query ={};
 
+     
       if (roleName == "Admin" || roleName == "QA Team" ) {
-         query = {
-            "OCNumber":req.body.OCNumber
+         ocListModel.find({ "Status.name" :{ $ne:"Closed" } },function(err,result){
+            if(result)
+               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+            else
+               res.json({status:"error",message:"No Oc List found!!!",data:err})
+                  
+         });
+         
+      }else if (roleName == "Branch/Dealer") {
+         if(req.body.branchId){
+            ocListModel.find({"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] },"BranchID._id":req.body.branchId},function(err,result){
+               if(result)
+                  res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+               else
+                  res.json({status:"error",message:"No Oc List found!!!",data:err})
+                     
+            });
          }
+      }else if(roleName == "Sales Team") {
+         ocListModel.find({"Status.name" :{ $in:["In Progress - Sales","In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"]  }},function(err,result){
+            if(result)
+               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+            else
+               res.json({status:"error",message:"No Oc List found!!!",data:err})
+                  
+         });
       }
-      else {
-         if(roleName == "Sales Team")
-            Status = "In Progress - Sales"
-         else if (roleName = "Branch/Dealer")
-            Status = "In Progress - Branch/Dealer"
-         query= {
-            "OCNumber":req.body.OCNumber,
-            "Status":{
-               "name":Status
-            }
-         }
-      }
-      ocListModel.findOne( query,function(err,result){
-         if (result)
-            res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
-         else 
-            res.json({status:"error",message:"Invalid OC Number!!!",data:null})
-      });
 
    },
    getByRoleName: function(req, res, next) {
