@@ -55,8 +55,7 @@ module.exports = {
    getByOCNumber: function(req, res, next) {
 
       let roleName = req.body.roleName;
-
-     
+      console.log("function callaed")
       if (roleName == "Admin" || roleName == "QA Team" ) {
          ocListModel.find({ "Status.name" :{ $ne:"Closed" } ,"OCNumber":req.body.OCNumber},function(err,result){
             if(result)
