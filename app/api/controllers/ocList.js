@@ -111,13 +111,15 @@ module.exports = {
             });
             
          }else if (roleName == "Branch/Dealer") {
-            ocListModel.find({"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] },"Priority.name":req.body.Priority,"BranchID._id":req.body.branchId},function(err,result){
-               if(result)
-                  res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
-               else
-                  res.json({status:"error",message:"No Oc List found!!!",data:err})
-                     
-            });
+            if(req.body.branchId){
+               ocListModel.find({"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] },"Priority.name":req.body.Priority,"BranchID._id":req.body.branchId},function(err,result){
+                  if(result)
+                     res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+                  else
+                     res.json({status:"error",message:"No Oc List found!!!",data:err})
+                        
+               });
+            }
          }else if(roleName == "Sales Team") {
             ocListModel.find({"Status.name" :{ $in:["In Progress - Sales","In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"]  },"Priority.name":req.body.Priority},function(err,result){
                if(result)
@@ -128,13 +130,15 @@ module.exports = {
             });
          }
       }else if (roleName == "Branch/Dealer") {
-         ocListModel.find({"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] },"BranchID._id":req.body.branchId},function(err,result){
-            if(result)
-               res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
-            else
-               res.json({status:"error",message:"No Oc List found!!!",data:err})
-                  
-         });
+         if(req.body.branchId){
+            ocListModel.find({"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] },"BranchID._id":req.body.branchId},function(err,result){
+               if(result)
+                  res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+               else
+                  res.json({status:"error",message:"No Oc List found!!!",data:err})
+                     
+            });
+         }
       }
       else if (roleName == "Sales Team") {
          ocListModel.find({"Status.name" :{ $in:["In Progress - Sales","In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] }},function(err,result){
