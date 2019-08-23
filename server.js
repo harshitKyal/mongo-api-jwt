@@ -5,7 +5,6 @@ const users = require('./routes/users');
 const userRole= require('./routes/userRole') ;
 const ocList= require('./routes/ocList') ;
 const subAssemblyList= require('./routes/masterDatabase/subAssembly') ;
-
 const ocDocument= require('./routes/ocDocument') ;
 const customerList= require('./routes/masterDatabase/customer') ;
 const branchList= require('./routes/masterDatabase/branch') ;
@@ -15,6 +14,7 @@ const spareList= require('./routes/masterDatabase/spare') ;
 const products= require('./routes/masterDatabase/product') ;
 const bodyParser = require('body-parser');
 const mongoose = require('./config/database'); //database configuration
+
 var jwt = require('jsonwebtoken');
 const app = express();
 // var app = express()
@@ -35,25 +35,25 @@ res.json({"tutorial" : "Build REST API with node.js"});
 });
 var cors = require('cors')
 app.use(cors())
+
 app.use('/api', express.static(__dirname + '/apidoc/'));
 
 // public route
 app.use('/users', users);
+
 // private route
 app.use('/movies',validateUser, movies);
 app.use('/userRole', userRole);
 app.use('/ocList', ocList);
-
 app.use('/branch',branchList);
-
 app.use('/customer',customerList);
 app.use('/customerType',customerTypeList);
 app.use('/ocDocument',ocDocument);
-
 app.use('/priority', priorityList);
 app.use('/spare',spareList);
 app.use('/subAssembly',subAssemblyList);
 app.use('/products', products);
+
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
@@ -69,6 +69,7 @@ function validateUser(req, res, next) {
   });
   
 }
+
 // express doesn't consider not found 404 as an error so we need to handle 404 explicitly
 // handle 404 error
 app.use(function(req, res, next) {
