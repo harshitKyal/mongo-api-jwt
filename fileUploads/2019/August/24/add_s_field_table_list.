@@ -1,0 +1,34 @@
+
+1. Attendance - Attendance of all employees with employee code
+2). attendance_module - detail of everything involved in attendance
+3). attendance_backup - attendance_backup data if delete
+4). attendance_log - attendance edit delete attendance_log
+5. Bill - all sale bill entry after sign challan received
+6. Bill1 - all sale bill , internal transfer , pf bill entry 
+7). Bonus - all data delete
+8). bill_log - bill edit delete log
+9. bunch - consolidated debtors payment details
+10). cash_module -  detail of everything involved in cash payment 
+11. cashGiven - cash given detail table linked with purchasemast , main, payment tables
+12). cashGiven_backup - cash given table backup if delete
+13). cashGiven_edited_deleted - cashGiven edit delete log
+14. creditss - debtors advance payment or on account payment
+
+15)). EMP - all employees data - (need to manual edit s field)
+16. emp_advance - advance of all employees
+17). Emp_Advance_log - delete edit log of emp emp_advance table
+18). EMP_Edited_deleted  - edit delete log of emp table
+19. main - detail of every cash payment transactions
+20). main_backup - all data if delete
+21). main_edited_deleted - delete edit log of main table
+22. payment - detail of employye salary payment
+23). payment_log - edit , delete log of payment table
+24). payment_backup - detail if delete
+25. purchase_payment_bunch - consolidated entry of purchase payment
+26. purchase_payment_details - detailed entry of purchase payment
+27,28. purchaseMast , purchaseData - purhcase bill feed details
+29. pymtDetail - debtors payment detail
+30,31. salaryPaymentMast ,salaryPaymentData - bunch salary detail
+32). salaryPaymentMast_log - delete edit log of salaryPaymentMast table
+33). salaryPaymentData_log - delete edit log of salaryPaymentData table
+34. 
