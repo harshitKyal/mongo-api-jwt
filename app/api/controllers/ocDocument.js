@@ -21,6 +21,7 @@ module.exports = {
    
    const fileUploadPath = require('../../../config/config')
    var dateObj = new Date();
+   console.log("dateObj",dateObj)
    let mlist = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
    let Yearr = dateObj.getUTCFullYear();
@@ -29,7 +30,7 @@ module.exports = {
    let dateName = dateObj.getDate();
 
    var dir = "./" + fileUploadPath.fileUploadPath + "/" + Yearr + "/" + monthName + "/" + dateName + "/";
-   
+   console.log("dir",dir)
    let fileInfo = JSON.parse(req.body.FileInfo);
    var ocDocument = new ocDocumentModel ({
       ocid:fileInfo.ocid, // To generate a unique id //
