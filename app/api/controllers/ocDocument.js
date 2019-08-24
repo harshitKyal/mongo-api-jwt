@@ -1,17 +1,7 @@
 const ocDocumentModel = require('../models/ocDocument');
 var multer = require('multer');
 
-const fileUploadPath = require('../../../config/config')
-   var dateObj = new Date();
-   let mlist = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
-   let Yearr = dateObj.getUTCFullYear();
-   let monthName =  dateObj.getMonth() ;  
-   monthName = mlist[monthName];
-   let dateName = dateObj.getDate();
-
-   var dir = "./" + fileUploadPath.fileUploadPath + "/" + Yearr + "/" + monthName + "/" + dateName + "/";
-   
 // app/api/controllers/userRole.js
 module.exports = {
    download : function(req,res,next){
@@ -28,6 +18,17 @@ module.exports = {
       });
    },
  save: function(req, res, next) {
+   
+   const fileUploadPath = require('../../../config/config')
+   var dateObj = new Date();
+   let mlist = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
+   let Yearr = dateObj.getUTCFullYear();
+   let monthName =  dateObj.getMonth() ;  
+   monthName = mlist[monthName];
+   let dateName = dateObj.getDate();
+
+   var dir = "./" + fileUploadPath.fileUploadPath + "/" + Yearr + "/" + monthName + "/" + dateName + "/";
    
    let fileInfo = JSON.parse(req.body.FileInfo);
    var ocDocument = new ocDocumentModel ({
