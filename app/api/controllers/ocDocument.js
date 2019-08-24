@@ -37,6 +37,7 @@ module.exports = {
       uploadeddate: fileInfo.uploadeddate,
       filePath: dir + fileInfo.documentname
    });
+   console.log(ocDocument)
 // console.log("sadsa",ocDocument)
    ocDocument.save(function(err,result) {
       if (err)
