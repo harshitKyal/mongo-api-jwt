@@ -36,12 +36,35 @@ var storage = multer.diskStorage({
 
     filename: (req, file, cb) => {
 
-      cb(null, file.originalname + '-' + Date.now())
+      cb(null, file.originalname)
     }
  });
  var upload = multer({storage: storage});
 
+router.get('/download/:documentId', ocDocumentController.download);
+/**
+        * @api {post} ocDocument/downlaod download Document 
+        * @apiVersion 0.0.1
+        * @apiGroup OC Document
+        *
+        * @apiParam {String} documentId ID of Document .(document ID should be pass as a URL Parameter - required)
+        *
+        * @apiSuccessExample {json} Success-Response:
+        * 
+        *{
+        * downlod pop up
+        *}
+        *
+        @apiErrorExample {json} Error-Response:
+        *
+        * {
+        "status": "error",
+        "message": "something looks wrong!!!!!!",
+        "data": err
+        }
+        */
 router.post('/save',upload.single('file'), ocDocumentController.save);
+
 /**
         * @api {post} ocDocument/save upload Document (**formData)
         * @apiVersion 0.0.1
