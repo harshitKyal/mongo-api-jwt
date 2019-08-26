@@ -11,7 +11,9 @@ module.exports = {
          if (result){
             path = result[0].filePath +".";
             // console.log(result[0]);
-            res.download(path); 
+            res.json({status:"success",message:"Oc Document found successfully!!!",data:path})
+  
+            // res.(path); 
          }
          else if (err)
             res.json({status:"error",message:"Invalid OC ID!!!",data:null})
