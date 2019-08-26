@@ -138,8 +138,8 @@ module.exports = {
                   
          });
       }else if (roleName == "Branch/Dealer") {
-         console.log(roleName)
-         ocListModel.find({$and: [ {"BranchID._id":req.body.branchId },{"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] }}]},function(err,result){
+         // console.log(roleName)
+         ocListModel.find({$and: [ {"BranchID._id":req.body.branchId }]},function(err,result){
                 
          // console.log(roleName)
             if(result)
