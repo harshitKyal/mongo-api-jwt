@@ -110,7 +110,7 @@ module.exports = {
             
          }else if (roleName == "Branch/Dealer") {
             if(req.body.branchId){
-               ocListModel.find({"BranchID._id":req.body.branchId ,"Priority.name":req.body.Priority,"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] }},function(err,result){
+               ocListModel.find({$and: [ {"BranchID._id":req.body.branchId },{"Priority.name":req.body.Priority},{"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] }}]},function(err,result){
                   if(result)
                      res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
                   else
@@ -139,8 +139,9 @@ module.exports = {
          });
       }else if (roleName == "Branch/Dealer") {
          console.log(roleName)
-         ocListModel.find({"BranchID._id":req.body.branchId ,"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] }},function(err,result){
-           console.log(roleName)
+         ocListModel.find({$and: [ {"BranchID._id":req.body.branchId },{"Status.name" :{ $in:["In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] }}]},function(err,result){
+                
+         // console.log(roleName)
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
