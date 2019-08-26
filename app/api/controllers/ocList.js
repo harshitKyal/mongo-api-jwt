@@ -97,7 +97,7 @@ module.exports = {
       //          }
       //       }
       // }
-      
+      // console.log("rolename",roleName)
       if (req.body.Priority) {
          if (roleName == "Admin" || roleName == "QA Team" ) {
             ocListModel.find({"Priority.name":req.body.Priority , "Status.name" :{ $ne:"Closed" } },function(err,result){
@@ -128,8 +128,9 @@ module.exports = {
             });
          }
       }else if (roleName == "Sales Team") {
-         ocListModel.find({"Status.name" :{ $in:["In Progress - Sales , In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] }},function(err,result){
-            // console.log(roleName)
+         // console.log("in sales",roleName)
+         ocListModel.find({"Status.name" :{ $in:["In Progress - Sales" , "In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] }},function(err,result){
+            // console.log(result)
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else

@@ -5,17 +5,19 @@ var multer = require('multer');
 // app/api/controllers/userRole.js
 module.exports = {
    download : function(req,res,next){
+      console.log("get downlad")
       let documentId =req.params.documentId;
       // console.log(path)
       ocDocumentModel.find( {_id:documentId},function(err,result){
-         if (result){
+         console.log(result)
+         if (result.length){
             path = result[0].filePath +".";
-            // console.log(result[0]);
-            res.json({status:"success",message:"Oc Document found successfully!!!",data:path})
-  
-            // res.(path); 
+            console.log("path",path)
+            res.download(path); 
+            // res.json({status:"success",message:"!!!",data:path})
+     
          }
-         else if (err)
+         else
             res.json({status:"error",message:"Invalid OC ID!!!",data:null})
       });
    },

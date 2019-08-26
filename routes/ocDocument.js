@@ -43,7 +43,7 @@ var storage = multer.diskStorage({
 
 router.get('/download/:documentId', ocDocumentController.download);
 /**
-        * @api {post} ocDocument/downlaod download Document 
+        * @api {get} ocDocument/download download Document 
         * @apiVersion 0.0.1
         * @apiGroup OC Document
         *
