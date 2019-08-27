@@ -61,7 +61,10 @@ module.exports = {
       if (roleName == "Admin" || roleName == "QA Team" || roleName == "Sales Team" ) {
          ocListModel.find({ "OCNumber":req.body.OCNumber},function(err,result){
             if(result)
+            {
+               // console.log(result[0])
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
+            }
             else
                res.json({status:"error",message:"No Oc List found!!!",data:err})
                   
@@ -82,7 +85,7 @@ module.exports = {
    },
    getByRoleName: function(req, res, next) {
       let roleName = req.body.roleName;
-      console.log(roleName)
+      // console.log(roleName)
       let Status =null;
       let query = {}
       // if(roleName !== "Admin" && roleName !== "QA Team") {
@@ -140,7 +143,7 @@ module.exports = {
       }
       else if (roleName == "Sales Team") {
          ocListModel.find({"Status.name" :{ $in:["In Progress - Sales","In Progress - Branch/Dealer","Installation Scheduled","Installation Complete"] }},function(err,result){
-           console.log(roleName)
+         //   console.log(roleName)
             if(result)
                res.json({status:"success",message:"Oc List found!!!",data:{ocList:result}})
             else
@@ -260,15 +263,17 @@ module.exports = {
          let roleName = req.body.roleName;
          let updateStatus;
          let ocList = req.body;
-         let PreviousStatus  = req.body.status
+         let PreviousStatus  = req.body.Status.name
          let userName = req.body.userName
          let ChangeStausLog;
          let changeStatusFlag =false ;
          let update;
          update = ocList
+
+         // console.log("update caleed ",update)
          if(req.body.Installation){
             let installationDate = req.body.Installation.installationDate;
-            if(req.body.installationComplete){
+            if(req.body.Installation.installationComplete){
                updateStatus="Installation Complete";
                changeStatusFlag = true ;
             }
@@ -278,6 +283,7 @@ module.exports = {
                   updateStatus="Installation Scheduled";
                }
             }
+            // console.log(changeStatusFlag)
             if (changeStatusFlag){
                ocList.Status={};
                ocList.Status.name = updateStatus;
