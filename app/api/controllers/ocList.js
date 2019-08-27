@@ -265,6 +265,7 @@ module.exports = {
          let ChangeStausLog;
          let changeStatusFlag =false ;
          let update;
+         update = ocList
          if(req.body.Installation){
             let installationDate = req.body.Installation.installationDate;
             if(req.body.installationComplete){
@@ -292,8 +293,10 @@ module.exports = {
                }
                update = Object.assign(ocList, ChangeStausLog);
             }
+            // else
+               // update = ocList
          }
-         update = ocList
+         
          ocListModel.findOneAndUpdate({
              _id: req.body._id
          },update, function(err, success) {
