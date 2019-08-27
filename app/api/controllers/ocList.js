@@ -260,33 +260,40 @@ module.exports = {
          let roleName = req.body.roleName;
          let updateStatus;
          let ocList = req.body;
-         let status  = req.body.status
+         let PreviousStatus  = req.body.status
          let userName = req.body.userName
          let ChangeStausLog;
+         let changeStatusFlag =false ;
+         let update;
          if(req.body.Installation){
             let installationDate = req.body.Installation.installationDate;
-            if(roleName === "Branch/Dealer"){
+            if(req.body.installationComplete){
+               updateStatus="Installation Complete";
+               changeStatusFlag = true ;
+            }
+            else if(roleName === "Branch/Dealer"){
                if(installationDate){
+                  changeStatusFlag = true ;
                   updateStatus="Installation Scheduled";
-                  ocList.Status={};
-                  ocList.Status.name = updateStatus;
-                  ChangeStausLog={
-                     "$push": {
-                        "StatusLog": {
-                            "UserName": userName,
-                            "PreviousStatus": "In Progress - Branch/Dealer",
-                            "ChangedStatus":updateStatus,
-                            "Date":d
-                        }
-                    },
-                  }
                }
             }
-            console.log(ocList)
+            if (changeStatusFlag){
+               ocList.Status={};
+               ocList.Status.name = updateStatus;
+               ChangeStausLog={
+                  "$push": {
+                     "StatusLog": {
+                           "UserName": userName,
+                           "PreviousStatus": PreviousStatus,
+                           "ChangedStatus":updateStatus,
+                           "Date":d
+                     }
+                  },
+               }
+               update = Object.assign(ocList, ChangeStausLog);
+            }
          }
-         // console.log(update)
-         let update = Object.assign(ocList, ChangeStausLog);
-         console.log("dsadsadas",update)
+         update = ocList
          ocListModel.findOneAndUpdate({
              _id: req.body._id
          },update, function(err, success) {
