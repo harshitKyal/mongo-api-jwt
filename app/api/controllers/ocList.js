@@ -5,6 +5,13 @@ const counterModel = require('../models/masterDatabase/counter');
    
 module.exports = {
    
+   modbusHMI: function(req, res, next) {
+     // movieModel.findByIdAndUpdate(req.params.movieId,{name:req.body.name}, function(err, movieInfo){
+       let jsonData =[32,43,231,43,100,143132]
+        res.json({data:jsonData});
+    //   }
+     // });
+     },
    updateStatus:function(req,res,next){
 
       let roleName = req.body.roleName;

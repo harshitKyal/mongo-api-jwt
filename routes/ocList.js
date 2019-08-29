@@ -3,6 +3,8 @@ const router = express.Router();
 const ocListController = require('../app/api/controllers/ocList');
 
 
+router.get('/modbusHMI', ocListController.modbusHMI);
+
 router.post('/getOCArchieves', ocListController.getClosedOCs);
 /**
         * @api {post} ocList/getOCArchieves get Closed OC List
