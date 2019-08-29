@@ -120,7 +120,6 @@ router.post('/create', ocListController.create);
         * @apiVersion 0.0.1
         * @apiGroup OC List
         *
-        * @apiParam {String} OCNumber to create new OC .(Oc Number should be pass as a body parameter - required and unique)
         * @apiParam {Date} OCDate Oc Date should be pass as a body parameter.
         * @apiParam {String} OCNotes Oc Notes should be pass as a body parameter.
         * @apiParam {String} Priority Priority is an object(Possible Values:HIGH,MEDIUM,LOW).( Field -_id:String , name :String.) 

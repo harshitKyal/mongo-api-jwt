@@ -138,7 +138,7 @@ router.get('/deleteDocument/:documentId', ocDocumentController.deleteDocument);
          * @apiSuccessExample {json} Success-Response:
         *{
         "status": "success",
-        "message": "Documents Fetched Successfully!!!",
+        "message": "Document Deleted Successfully!!!",
         "data": null
         *}
         *
