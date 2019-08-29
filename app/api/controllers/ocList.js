@@ -7,8 +7,8 @@ module.exports = {
    
    modbusHMI: function(req, res, next) {
      // movieModel.findByIdAndUpdate(req.params.movieId,{name:req.body.name}, function(err, movieInfo){
-       let jsonData =[32,43,231,43,100,143132]
-        res.json({data:jsonData});
+       let jsonData ={"a":1,"b":22,"c":444444}
+        res.json(jsonData);
     //   }
      // });
      },
