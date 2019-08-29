@@ -54,13 +54,30 @@ module.exports = {
    
  },
  getByOCID: function(req, res, next) {
-
+   
    ocDocumentModel.find( {ocid:req.body.ocid},function(err,result){
-      if (result)
+      if (result){
+         let x =1;
+         for (i in result) {   
+            result[i].srNo=x;
+            x=x+1;
+         }
          res.json({status:"success",message:"Oc with Documents found!!!",data:{ocDocument:result}})
+      }
       else if (err)
          res.json({status:"error",message:"Invalid OC ID!!!",data:null})
-   });
+      });
 
-},
+   },
+
+   deleteDocument :function(req,res,next){
+      ocDocumentModel.findByIdAndRemove(req.params.documentId , function(err,result) {
+         if (result) {
+            res.json({status:"success",message:"Document Deleted Successfully!!!",data:result})
+         }
+         else {
+            res.json({status:"error",message:"Invalid Document Id",data:err})
+         }
+     });
+   }
 }

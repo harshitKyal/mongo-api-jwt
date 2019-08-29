@@ -6,6 +6,7 @@ const prioritySchema = new Schema({
  name: {
   type: String,  
   required: true,
+  unique:true,
  },
 });
 module.exports = mongoose.model('priority', prioritySchema)

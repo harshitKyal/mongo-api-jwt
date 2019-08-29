@@ -75,6 +75,7 @@ router.post('/save',upload.single('file'), ocDocumentController.save);
         * @apiParam {String} uploadedby id of uploaded person .(uploaded by should be pass as a formData parameter - required)
         * @apiParam {Date} uploadeddate uploaded Date.(uploaded Date should be pass as a formData parameter - required)
         * @apiParam {String} filePath  of uploaded file.(filePath should be pass as a formData parameter - required)
+        * @apiParam {String} notes  if any .(notes should be pass as a formData parameter)
         *
         * @apiSuccessExample {json} Success-Response:
         * 
@@ -105,12 +106,14 @@ router.post('/getByOCID', ocDocumentController.getByOCID);
         "message": "Documents Fetched Successfully!!!",
         "data": {
             "ocDocuments": [{
+                "srNo":"Number",
                 "_id": "string",
                 "ocid": "string",
                 "documentname":"String",
                 "uplaodedby":"String",
                 "uploadeddate":"Date",
-                "dochash":"String"
+                "dochash":"String",
+                "notes":"String",
                 "__v": "number"
                 },
             }]
@@ -122,6 +125,28 @@ router.post('/getByOCID', ocDocumentController.getByOCID);
         * {
         "status": "error",
         "message": "Invalid OC Number",
+        "data": null
+        }
+        */
+router.get('/deleteDocument/:documentId', ocDocumentController.deleteDocument);
+/**
+        * @api {get} ocDocument/deleteDocument/:Id delete document list by document ID
+        * @apiVersion 0.0.1
+        * @apiGroup OC Document
+        *
+        * @apiParam {String} documentId Document ID to delete Document .(Document ID should be pass as a URL parameter - required)
+         * @apiSuccessExample {json} Success-Response:
+        *{
+        "status": "success",
+        "message": "Documents Fetched Successfully!!!",
+        "data": null
+        *}
+        *
+        @apiErrorExample {json} Error-Response:
+        *
+        * {
+        "status": "error",
+        "message": "Invalid Document ID",
         "data": null
         }
         */

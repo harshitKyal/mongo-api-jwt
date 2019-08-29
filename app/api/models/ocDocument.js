@@ -19,6 +19,12 @@ uploadeddate :{
 },
 filePath:{
     type:String,
+},
+notes:{
+    type:String,
+},
+srNo:{
+    type:Number,
 }
 
 });

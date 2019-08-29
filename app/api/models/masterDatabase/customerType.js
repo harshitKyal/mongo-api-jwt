@@ -6,6 +6,7 @@ const customerTypeSchema = new Schema({
  name: {
   type: String,  
   required: true,
+  unique:true,
  },
 });
 module.exports = mongoose.model('customerType', customerTypeSchema)

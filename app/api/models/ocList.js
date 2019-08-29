@@ -1,4 +1,8 @@
 const mongoose = require('mongoose');
+let autoIncrement = require('mongoose-auto-increment');
+
+// global.mongoose = require('./config/database'); //database configuration
+autoIncrement.initialize(mongoose);
 
 mongoose.pluralize(null);
 //Define a schema
@@ -9,6 +13,7 @@ const ocListSchema = new Schema({
   required: true,
   unique:true ,
   trim: true,
+  ref: 'OCNumber'
  },
  OCDate: {
   type: Date,
@@ -163,5 +168,8 @@ StatusLog:[
 ]
 
 });
+ocListSchema.plugin(autoIncrement.plugin,{model:'ocList',field :'OCNumber',startAt: 20191000,});
 
+var ocList = mongoose.model('ocList', ocListSchema),
+ocList = new ocList();
 module.exports = mongoose.model('ocList', ocListSchema);
