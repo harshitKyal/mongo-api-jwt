@@ -41,7 +41,8 @@ module.exports = {
       documentname: fileInfo.documentname,
       uploadedby: fileInfo.uploadedby,
       uploadeddate: fileInfo.uploadeddate,
-      filePath: dir + fileInfo.documentname
+      filePath: dir + fileInfo.documentname,
+      notes:fileInfo.notes,
    });
    // console.log(ocDocument)
 // console.log("sadsa",ocDocument)

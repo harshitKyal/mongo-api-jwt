@@ -186,7 +186,7 @@ module.exports = {
               UpdatedDate : req.body.UpdatedDate,
               SerialNumbers : req.body.SerialNumbers,
           });
-         //  console.log("OCLst",ocList.OCNumber)
+
           ocListModel.findOne({
               'OCNumber': req.body.OCNumber
           }, function(err, result) {
@@ -195,6 +195,10 @@ module.exports = {
                   res.json({status:"error",message:"Oc List already Exist!!!",data:null})
               // If email doesn't exists //
               else {
+
+                  // let nnextCount = ocList.nextCount(function(){});
+                  // console.log("next",nnextCount)
+                  // ocList.OCNumber = nnextCount;
                   // Saving the model to the database //                   
                   ocList.save(function(err,result) {
                      
