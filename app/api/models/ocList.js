@@ -119,6 +119,9 @@ Installation:{
     installationComplete :{
         type:Boolean,
     },
+    installationCompleteDate:{
+        type:Date,
+    },
     invoiceDate:{
         type:Date,
     },

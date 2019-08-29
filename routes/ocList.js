@@ -137,6 +137,8 @@ router.post('/create', ocListController.create);
         * @apiParam {String} UpdatedBy updated by ( person name who updated the list)
         * @apiParam {Date} CreatedDate creation date
         * @apiParam {Date} UpdatedDate updated date
+        * @apiParam {Date} installationCompleteDate updated date
+        * 
         * @apiParam {String} SerialNumbers serial numbers is an array of objects ( Field - ID:Number ,name : String, srno : String)
         * 
         * @apiSuccessExample {json} Success-Response:
