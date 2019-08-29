@@ -23,7 +23,6 @@ module.exports = {
       let userName = req.body.userName;
       
       let changeStatusFlag =true;
-      // console.log("insal",status,roleName)
       if (status == "Installation Complete" )
          updateStatus = "Closed";
       else if ((roleName == "Admin" || roleName == "QA Team") && status=="New") 
@@ -32,8 +31,7 @@ module.exports = {
          updateStatus="In Progress - Branch/Dealer";
       else
          changeStatusFlag = false;
-
-      // console.log("update Status",updateStatus)
+         
       if (changeStatusFlag){
          let d = new Date()
          query={
@@ -171,7 +169,6 @@ module.exports = {
    create: function(req, res,next) {
 
          var ocList = new ocListModel ({
-            //   OCNumber: req.body.OCNumber, // To generate a unique id //
               OCDate: req.body.OCDate,
               OCNotes: req.body.OCNotes,
               Priority: req.body.Priority,
@@ -188,11 +185,8 @@ module.exports = {
               CreatedDate : req.body.CreatedDate,
               UpdatedDate : req.body.UpdatedDate,
               SerialNumbers : req.body.SerialNumbers,
-            //   OCNumber :getValueForNextSequence("item_id"),
-         
-            //   customer:req.body.customer,
           });
-          console.log("OCLst",ocList.OCNumber)
+         //  console.log("OCLst",ocList.OCNumber)
           ocListModel.findOne({
               'OCNumber': req.body.OCNumber
           }, function(err, result) {
@@ -203,19 +197,17 @@ module.exports = {
               else {
                   // Saving the model to the database //                   
                   ocList.save(function(err,result) {
-                      // If error //
-                     //  console.log("rsule",result)
                      
                       ocList.nextCount(function(err, count) {
-                        console.log("ccccc",count)
+                        // console.log("ccccc",count)
                         // count === 101 -> true
                  
-                        ocList.resetCount(function(err, nextCount) {
+                        // ocList.resetCount(function(err, nextCount) {
                            
-                           console.log("next",nextCount)
-                            // nextCount === 100 -> true
+                        //    console.log("next",nextCount)
+                        //     // nextCount === 100 -> true
                  
-                        });
+                        // });
                  
                     });
                       if (err)
@@ -228,6 +220,15 @@ module.exports = {
                   });
               }
           });
+   },
+   getOcNumber: function(req, res, next) {
+      ocListModel.nextCount(function(err, OCNumber){
+      if (err) 
+         next(err)
+         else 
+         res.json({status:"success", message: "OC Number fetched!!!", data:{OCNumber: OCNumber}});
+
+      })
    },
    getAll: function(req, res, next) {
       ocListModel.find({},function(err, ocList){

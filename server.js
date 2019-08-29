@@ -59,6 +59,7 @@ app.use('/products', products);
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
+
 function validateUser(req, res, next) {
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
     if (err) {
@@ -81,12 +82,12 @@ app.use(function(req, res, next) {
 });
 // handle errors
 app.use(function(err, req, res, next) {
- console.log(err);
+//  console.log(err);
  
   if(err.status === 404)
-   res.status(404).json({status:"error",message: "Not found",data:null});
+   res.status(404).json({status:"error",message: "Not found",data:err});
   else 
-    res.status(500).json({message: "Something looks wrong :( !!!"});
+    res.status(500).json({status:"error",message: "Something looks wrong :( !!!" , data:err});
 });
 app.listen(3000, function(){
  console.log('Node server listening on port 3000');

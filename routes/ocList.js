@@ -5,6 +5,22 @@ const ocListController = require('../app/api/controllers/ocList');
 
 router.get('/modbusHMI', ocListController.modbusHMI);
 
+router.get('/getOcNumber', ocListController.getOcNumber);
+/**
+        * @api {get} ocList/getOcNumber get OC Number
+        * @apiVersion 0.0.1
+        * @apiGroup OC List
+        *
+        * @apiSuccessExample {json} Success-Response:
+        *{
+        "status": "success",
+        "message": "OC Number fetched!!!",
+        "data": {
+            "OCNumber": "Number"
+        }
+        *}
+        *
+        */
 router.post('/getOCArchieves', ocListController.getClosedOCs);
 /**
         * @api {post} ocList/getOCArchieves get Closed OC List
@@ -131,13 +147,12 @@ router.post('/create', ocListController.create);
         * @apiParam {String} ProductID product Ids is an object ( Field - _id:String ,name :String.)
         * @apiParam {String} SubAssemblyIDs branch Ids is an array of objects ( Field -_id:String , name :String.)
         * @apiParam {String} SpareIDs spare Ids is an object ( Field - _id:String ,name :String.)
-        * @apiParam {String} Installation installtion is an object.(Field - installationDate:Date,installationComplete:boolean,invoiceDate:Date,InstallationTechnician:String,technicianContact:String,transport:String,invoiceNumber:String)
+        * @apiParam {String} Installation installtion is an object.(Field - installationDate:Date,installationComplete:boolean,installationCompleteDate,invoiceDate:Date,InstallationTechnician:String,technicianContact:String,transport:String,invoiceNumber:String)
         * @apiParam {String} Status Status is an object ( Field - name :String.)
         * @apiParam {String} CreatedBy created by (person who created the list)
         * @apiParam {String} UpdatedBy updated by ( person name who updated the list)
         * @apiParam {Date} CreatedDate creation date
         * @apiParam {Date} UpdatedDate updated date
-        * @apiParam {Date} installationCompleteDate updated date
         * 
         * @apiParam {String} SerialNumbers serial numbers is an array of objects ( Field - ID:Number ,name : String, srno : String)
         * 
