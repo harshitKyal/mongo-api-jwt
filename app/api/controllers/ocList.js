@@ -1,8 +1,5 @@
 const ocListModel = require('../models/ocList');
-const counterModel = require('../models/masterDatabase/counter');
 
-
-   
 module.exports = {
    
    modbusHMI: function(req, res, next) {
