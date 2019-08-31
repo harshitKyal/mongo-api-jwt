@@ -3,6 +3,8 @@ const movies = require('./routes/movies') ;
 const users = require('./routes/users');
 const userRole= require('./routes/userRole') ;
 const ocList= require('./routes/ocList') ;
+
+const scanOcNumber= require('./routes/scanOcNumber') ;
 const subAssemblyList= require('./routes/masterDatabase/subAssembly') ;
 const ocDocument= require('./routes/ocDocument') ;
 const customerList= require('./routes/masterDatabase/customer') ;
@@ -51,25 +53,26 @@ app.use('/api', express.static(__dirname + '/apidoc/'));
 // public route
 app.use('/users', users);
 
+
 // private route
 app.use('/movies', movies);
 app.use('/userRole',userRole);
 app.use('/ocList',validateUser,ocList);
+app.use('/scanOcList',scanOcNumber);
 app.use('/branch',branchList);
 app.use('/customer',customerList);
 app.use('/customerType',customerTypeList);
-app.use('/ocDocument',ocDocument);
-app.use('/priority', priorityList);
+app.use('/ocDocument',validateUser,ocDocument);
+app.use('/priority',priorityList);
 app.use('/spare',spareList);
 app.use('/subAssembly',subAssemblyList);
-app.use('/products', products);
+app.use('/products',products);
 
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);
 });
 
 function validateUser(req, res, next) {
-  // console.log("dads")
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
     console.log(err)
     if (err) {
@@ -77,23 +80,17 @@ function validateUser(req, res, next) {
         success:false,
         message:'Token is not valid'
       }]);
-      // res.json({status:401, message: err.message, data:null});
     }else{
-        // console.log("in vapidates")
-        userLoggedModel.findOne({deviceId:req.headers['x-auth-useragent'] , userEmail:req.headers['x-auth-user']  },function(err,result){
-          // console.log("in usemodel",result)
+        userLoggedModel.findOne({deviceId:req.headers['user-agent'] , userEmail:req.headers['x-auth-user']  },function(err,result){
           if(result){
-            // console.log("in resule")
             req.body.userId = decoded.id;
             next();
           }
           else{
-            // console.log("expired")
             res.status(401).send([{
               success:false,
               message:'Token is not valid'
             }]);
-            // res.json({status:401, message: "jwt expired", data:null});
           }
         })
         
