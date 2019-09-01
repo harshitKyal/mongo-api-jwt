@@ -37,7 +37,7 @@ login: function(req, res, next) {
                      }); 
                   })
 
-                  const token = jwt.sign({id: userInfo._id}, req.app.get('secretKey'), { expiresIn: '1m' });
+                  const token = jwt.sign({id: userInfo._id}, req.app.get('secretKey'), { expiresIn: '1h' });
                   delete userInfo["password"]
                   let userI = userInfo;
                   let roleName ;
