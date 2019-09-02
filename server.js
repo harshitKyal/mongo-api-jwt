@@ -62,7 +62,7 @@ app.use('/scanOcList',scanOcNumber);
 app.use('/branch',branchList);
 app.use('/customer',customerList);
 app.use('/customerType',customerTypeList);
-app.use('/ocDocument',validateUser,ocDocument);
+app.use('/ocDocument',ocDocument);
 app.use('/priority',priorityList);
 app.use('/spare',spareList);
 app.use('/subAssembly',subAssemblyList);
@@ -74,7 +74,7 @@ app.get('/favicon.ico', function(req, res) {
 
 function validateUser(req, res, next) {
   jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function(err, decoded) {
-    console.log(err)
+    // console.log(err)
     if (err) {
       res.status(401).send([{
         success:false,
