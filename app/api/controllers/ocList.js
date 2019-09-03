@@ -174,6 +174,7 @@ module.exports = {
    },
    create: function(req, res,next) {
 
+      const d = new Date();
          var ocList = new ocListModel ({
               OCDate: req.body.OCDate,
               OCNotes: req.body.OCNotes,
@@ -191,7 +192,19 @@ module.exports = {
               CreatedDate : req.body.CreatedDate,
               UpdatedDate : req.body.UpdatedDate,
               SerialNumbers : req.body.SerialNumbers,
+              StatusLog : {
+                 UserName :req.headers['x-auth-user'],
+                 PreviousStatus : "New",
+                 ChangedStatus:"New",
+                 Date: d
+              }
           });
+         // ocList.StatusLog = {
+         //    "UserName": 
+         //    "PreviousStatus": "New",
+         //    "ChangedStatus":"New",
+         //    "Date":d
+         // }
 
           ocListModel.findOne({
               'OCNumber': req.body.OCNumber
