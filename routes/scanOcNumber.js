@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ocListController = require('../app/api/controllers/ocList');
 
+router.get('/modbusHMI', ocListController.modbusHMI);
 
 router.post('/getByOCNumber', ocListController.getScanOcNumber);
 /**
