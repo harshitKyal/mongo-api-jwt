@@ -1,6 +1,6 @@
 const ocListModel = require('../models/ocList');
 const userModel = require('../models/users');
-
+const modbusModel = require('../models/modbus');
 const userRoleModel = require('../models/userRole');
 module.exports = {
    
@@ -11,6 +11,31 @@ module.exports = {
     //   }
      // });
      },
+
+   modbusAddd: function(req, res,next) {
+      console.log(req.body)
+      const d = new Date();
+         var ocList = new modbusModel ({
+              test:req.body.output
+          });
+         // ocList.StatusLog = {
+         //    "UserName": 
+         //    "PreviousStatus": "New",
+         //    "ChangedStatus":"New",
+         //    "Date":d
+         // }
+          // Saving the model to the database //                   
+          ocList.save(function(err,result) {
+                     
+            if (err)
+              res.json({status:"success",message:"something looks wrong!!!",data:err})
+
+                 //next(error)
+            // If successfuly saved //
+            else 
+                res.json({status:"success",message:" Added successfully!!!",data:result})
+        });
+   },
    updateStatus:function(req,res,next){
 
       let roleName = req.body.roleName;
