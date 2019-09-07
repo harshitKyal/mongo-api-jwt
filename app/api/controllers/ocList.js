@@ -15,9 +15,13 @@ module.exports = {
    modbusAddd: function(req, res,next) {
       console.log(req.body)
       const d = new Date();
+
+
       var data = JSON.stringify(req.body.output)
+
          var ocList = new modbusModel ({
-              test:data
+              test:data,
+              HMINo : req.body.HMINo
           });
          // ocList.StatusLog = {
          //    "UserName": 
