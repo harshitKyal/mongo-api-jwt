@@ -4,8 +4,9 @@ const ocListController = require('../app/api/controllers/ocList');
 
 router.get('/modbusHMI', ocListController.modbusHMI);
 router.post('/addModbusHMI', ocListController.modbusAddd);
-
-router.post('/getByOCNumber', ocListController.getScanOcNumber);
+router.post('/updateModbusCon', ocListController.updateModbusConsolidated)
+router.post('/addModbusCon', ocListController.addModbusConsolidated)
+router.post('/modbusGet', ocListController.modbusConsolidatedGetAll);
 /**
         * @api {post} scanOcList/getByOCNumber get oc by OC Number
         * @apiVersion 0.0.1

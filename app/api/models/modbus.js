@@ -11,4 +11,5 @@ const modbusSchema = new Schema({
      type:Number
  }
 });
+
 module.exports = mongoose.model('modbus', modbusSchema)

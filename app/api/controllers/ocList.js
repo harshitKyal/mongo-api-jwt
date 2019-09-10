@@ -1,9 +1,71 @@
 const ocListModel = require('../models/ocList');
 const userModel = require('../models/users');
 const modbusModel = require('../models/modbus');
+const modbusConsolidatedModel = require('../models/modbusConsoldated');
 const userRoleModel = require('../models/userRole');
 module.exports = {
    
+   modbusConsolidatedGetAll: function(req, res, next) {
+      let modbusConsoldated = {
+         seqNumber : req.body.output[0],
+         HMINo : req.body.output[1]
+      };
+
+      let resultModbus=[];
+      modbusConsolidatedModel.find(modbusConsoldated, function(err, result){
+        if (err){
+          next(err);
+        } else{
+         // resultModbus.push({: movies[0], colorSeq: movies[1], quantity: movies[2],timeDuration:movies[3],endTime: movies[4]});
+            res.json(result);
+        }
+      });
+     },
+     addModbusConsolidated: function(req, res, next) {
+      // let modbusConsoldated = [];
+      var modbusConsoldated = new modbusConsolidatedModel ({
+         seqNumber: req.body.seqNumber,
+         HMINo : req.body.HMINo,
+         lotNo: req.body.lotNo,
+         colorSeq:req.body.colorSeq,
+         quantity: req.body.quantity,
+         timeDuration: req.body.timeDuration,
+         startTime: req.body.startTime,
+         endTime: req.body.endTime,
+     });
+     modbusConsoldated.save( function(err, result){
+        if (err){
+          next(err);
+        } else{
+            // modbusConsoldated.push({lotNo: movies[0], colorSeq: movies[1], quantity: movies[2],timeDuration:movies[3],endTime: movies[4]});
+            res.json(result);
+            // console.log(result)
+        }
+      });
+     },
+     updateModbusConsolidated: function(req, res, next) {
+      // let modbusConsoldated = [];
+      let reqModbusConsoldated = {
+         seqNumber : req.body.output[0],
+         HMINo : req.body.output[1]
+      };
+
+      var modbusConsoldated =  {
+         seqNumber: req.body.output[0],
+         HMINo : req.body.output[1],
+         lotNo: req.body.output[2],
+         startTime: req.body.output[3],
+         endTime: req.body.output[4],
+     };
+      modbusConsolidatedModel.findOneAndUpdate(reqModbusConsoldated,modbusConsoldated, function(err, result){
+        if (err){
+          next(err);
+        } else{
+            // modbusConsoldated.push({lotNo: movies[0], colorSeq: movies[1], quantity: movies[2],timeDuration:movies[3],endTime: movies[4]});
+            res.json(result);
+        }
+      });
+     },
    modbusHMI: function(req, res, next) {
      // movieModel.findByIdAndUpdate(req.params.movieId,{name:req.body.name}, function(err, movieInfo){
        let jsonData =[1,22,3232,5,6];
@@ -13,7 +75,7 @@ module.exports = {
      },
 
    modbusAddd: function(req, res,next) {
-      console.log(req.body)
+      // console.log(req.body)
       const d = new Date();
 
 
@@ -23,12 +85,7 @@ module.exports = {
               test:data,
               HMINo : req.body.HMINo
           });
-         // ocList.StatusLog = {
-         //    "UserName": 
-         //    "PreviousStatus": "New",
-         //    "ChangedStatus":"New",
-         //    "Date":d
-         // }
+
           // Saving the model to the database //                   
           ocList.save(function(err,result) {
                      
@@ -84,27 +141,7 @@ module.exports = {
                // console.log("asdas",result)
             }
          }
-
-         
-         )
-         // userModel.aggregate([
-         //    {
-         //      $lookup:
-         //        {
-         //          from: "userRole",
-         //          localField: "_id",
-         //          foreignField: "RoleId",
-         //          as: "inventory_docs"
-         //        }
-         //   }
-         // ]).exec(function(err,result){
-         //    if (result ) console.log("dsa",result)
-         //    else console.log(err)
-         // })
-         // userModel.find().populate('../models/userRole').exec(function(err, users) {
-         //       console.log("sa",users)
-         // });
-      }
+         )}
       else
          changeStatusFlag = false;
       // console.log("dad",changeStatusFlag)  
