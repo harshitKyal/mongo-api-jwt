@@ -16,8 +16,8 @@ module.exports = {
         if (err){
           next(err);
         } else{
-         // resultModbus.push({: movies[0], colorSeq: movies[1], quantity: movies[2],timeDuration:movies[3],endTime: movies[4]});
-            res.json(result);
+            resultModbus.push(result[0].seqNumber,result[0].HMINo, result[0].lotNo,result[0].colorSeq,result[0].quantity,result[0].timeDuration);
+            res.json(resultModbus);
         }
       });
      },
