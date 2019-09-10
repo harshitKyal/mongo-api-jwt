@@ -102,7 +102,6 @@ module.exports = {
 
       let roleName = req.body.roleName;
       let status = req.body.status;
-      let installationComplete = req.body.installationComplete;
       let ocId = req.body.ocId;
       let branchName = req.body.branchName;
       let updateStatus;
@@ -114,13 +113,10 @@ module.exports = {
       else if ((roleName == "Admin" || roleName == "QA Team") && status=="New") {
          updateStatus = "In Progress - Sales";
          userRoleModel.find({"RoleName":"Sales Team"},function(err,result){
-            // console.log("b",result)
             if(result){
                userModel.find({"RoleId":result[0]._id},function(err,result){
-                  console.log("a",result)
                   if(result){
                      AssignTo = result[0].name;
-                     console.log("assign to" ,AssignTo)
                   }
                })
             }
@@ -128,23 +124,20 @@ module.exports = {
          })
         
       }
-      else if(roleName=="Sales Team" && branchName ){//&& status != "In Progress - Branch/Dealer"){
-         // console.log("in if")
+      else if(roleName=="Sales Team" && branchName && status != "In Progress - Branch/Dealer"){
          updateStatus="In Progress - Branch/Dealer";
-         // console.log(req.body.branchId)
          userModel.find({"branchId":req.body.branchId},function(err,result){
             if (err) {
                console.log(err)
             }
             else{
                AssignTo = result[0].name
-               // console.log("asdas",result)
             }
          }
          )}
       else
          changeStatusFlag = false;
-      // console.log("dad",changeStatusFlag)  
+        
       setTimeout(function(){if (changeStatusFlag){
          let d = new Date()
          query={
@@ -218,22 +211,6 @@ module.exports = {
    },
    getByRoleName: function(req, res, next) {
       let roleName = req.body.roleName;
-      // console.log(roleName)
-      let Status =null;
-      let query = {}
-      // if(roleName !== "Admin" && roleName !== "QA Team") {
-      //    // console.log("fsdf")
-      //    if(roleName == "Sales Team")
-      //       Status = "In Progress - Sales"
-      //    else if (roleName == "Branch/Dealer")
-      //       Status = "In Progress - Branch/Dealer";
-      //       query= {
-      //          "Status":{
-      //             "name":Status,
-      //          }
-      //       }
-      // }
-      
       if (req.body.Priority) {
          if (roleName == "Admin" || roleName == "QA Team" ) {
             ocListModel.find({"Priority.name":req.body.Priority , "Status.name" :{ $ne:"Closed" } },function(err,result){
@@ -430,13 +407,7 @@ module.exports = {
    updateOC:function(req, res,next) {
 
          let d = new Date()
-         let roleName = req.body.roleName;
-         let updateStatus;
          let ocList = req.body;
-         let PreviousStatus  = req.body.Status.name
-         let userName = req.body.userName
-         let ChangeStausLog;
-         let changeStatusFlag =false ;
          let update;
          update = ocList;
                   
@@ -451,23 +422,6 @@ module.exports = {
                   changeStatusFlag = true ;
                   updateStatus="Installation Scheduled";
                }
-            
-
-            // if (changeStatusFlag){
-            //    ocList.Status={};
-            //    ocList.Status.name = updateStatus;
-            //    ChangeStausLog={
-            //       "$push": {
-            //          "StatusLog": {
-            //                "UserName": userName,
-            //                "PreviousStatus": PreviousStatus,
-            //                "ChangedStatus":updateStatus,
-            //                "Date":d
-            //          }
-            //       },
-            //    }
-            //    update = Object.assign(ocList, ChangeStausLog);
-            // }
          }
          
          ocListModel.findOneAndUpdate({

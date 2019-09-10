@@ -7,6 +7,8 @@ router.post('/create', priorityController.create);
         * @apiVersion 0.0.1
         * @apiGroup masterDatabase
         *
+        * @apiParam {String} name name of priority .(name should be pass as a body Parameter - required)
+        *
         * @apiSuccessExample {json} Success-Response:
         *{
         "status": "success",

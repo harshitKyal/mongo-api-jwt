@@ -7,6 +7,9 @@ router.post('/create', subAssemblyController.create);
         * @apiVersion 0.0.1
         * @apiGroup masterDatabase
         *
+        * @apiParam {String} name name of sub Assembly .(name should be pass as a body Parameter - required)
+        * @apiParam {String} code code of sub Assembly .(code should be pass as a body Parameter - required)
+        *
         * @apiSuccessExample {json} Success-Response:
         *{
         "status": "success",
@@ -36,7 +39,8 @@ router.get('/', subAssemblyController.getAll);
                 "subAssemblyList":[
                         {
                                 "_id":"string",
-                                "name":"string"
+                                "name":"string",
+                                "code":"string"
                         }
                 ]
         }
