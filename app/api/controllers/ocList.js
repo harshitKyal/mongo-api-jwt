@@ -15,67 +15,61 @@ module.exports = {
       modbusConsolidatedModel.find(modbusConsoldated, function(err, result){
         if (err){
          res.json({status:"error", message: "Invalid Oc Number or !!!", data:{OCNumber: OCNumber}});
-
         } else{
             resultModbus.push(result[0].seqNumber,result[0].HMINo, result[0].lotNo,result[0].colorSeq,result[0].quantity,result[0].timeDuration);
-            console.log("result",resultModbus)
+            // console.log("result",resultModbus)
             res.json(resultModbus);
         }
       });
      },
-     addModbusConsolidated: function(req, res, next) {
-      // let modbusConsoldated = [];
-      var modbusConsoldated = new modbusConsolidatedModel ({
-         seqNumber: req.body.seqNumber,
-         HMINo : req.body.HMINo,
-         lotNo: req.body.lotNo,
-         colorSeq:req.body.colorSeq,
-         quantity: req.body.quantity,
-         timeDuration: req.body.timeDuration,
-         startTime: req.body.startTime,
-         endTime: req.body.endTime,
-     });
-     modbusConsoldated.save( function(err, result){
-        if (err){
-          next(err);
-        } else{
-            // modbusConsoldated.push({lotNo: movies[0], colorSeq: movies[1], quantity: movies[2],timeDuration:movies[3],endTime: movies[4]});
-            res.json(result);
-            // console.log(result)
-        }
-      });
-     },
-     updateModbusConsolidated: function(req, res, next) {
-      // let modbusConsoldated = [];
-      let reqModbusConsoldated = {
-         seqNumber : req.body.output[0],
-         HMINo : req.body.output[1]
-      };
-
-      var modbusConsoldated =  {
-         seqNumber: req.body.output[0],
-         HMINo : req.body.output[1],
-         lotNo: req.body.output[2],
-         startTime: req.body.output[3],
-         endTime: req.body.output[4],
-     };
-      modbusConsolidatedModel.findOneAndUpdate(reqModbusConsoldated,modbusConsoldated, function(err, result){
-        if (err){
-          next(err);
-        } else{
-            // modbusConsoldated.push({lotNo: movies[0], colorSeq: movies[1], quantity: movies[2],timeDuration:movies[3],endTime: movies[4]});
-            res.json(result);
-        }
-      });
-     },
+   addModbusConsolidated: function(req, res, next) {
+   var modbusConsoldated = new modbusConsolidatedModel ({
+      seqNumber: req.body.seqNumber,
+      HMINo : req.body.HMINo,
+      lotNo: req.body.lotNo,
+      colorSeq:req.body.colorSeq,
+      quantity: req.body.quantity,
+      timeDuration: req.body.timeDuration,
+      startTime: req.body.startTime,
+      endTime: req.body.endTime,
+   });
+   modbusConsoldated.save( function(err, result){
+      if (err)
+         next(err);
+      else
+         res.json(result);
+   });
+   },
+   updateModbusConsolidated: function(req, res, next) {
+   // let modbusConsoldated = [];
+   let reqModbusConsoldated = {
+      seqNumber : req.body.output[0],
+      HMINo : req.body.output[1]
+   };
+   console.log("update",req.body.output)
+   var modbusConsoldated =  {
+      seqNumber: req.body.output[0],
+      HMINo : req.body.output[1],
+      lotNo: req.body.output[2],
+      startTime: req.body.output[3],
+      endTime: req.body.output[4],
+   };
+   modbusConsolidatedModel.findOneAndUpdate(reqModbusConsoldated,modbusConsoldated, function(err, result){
+      if (err){
+         next(err);
+      } else{
+         // modbusConsoldated.push({lotNo: movies[0], colorSeq: movies[1], quantity: movies[2],timeDuration:movies[3],endTime: movies[4]});
+         res.json(result);
+      }
+   });
+   },
    modbusHMI: function(req, res, next) {
      // movieModel.findByIdAndUpdate(req.params.movieId,{name:req.body.name}, function(err, movieInfo){
        let jsonData =[1,22,3232,5,6];
         res.json(jsonData);
     //   }
      // });
-     },
-
+   },
    modbusAddd: function(req, res,next) {
       // console.log(req.body)
       const d = new Date();
@@ -180,7 +174,6 @@ module.exports = {
                res.json({status:"error",message:"No Oc List found!!!",data:err})  
          });
    },
-
    getByOCNumber: function(req, res, next) {
 
       let roleName = req.body.roleName;
@@ -418,13 +411,9 @@ module.exports = {
             let installationDate = req.body.Installation.installationDate;
             if(req.body.Installation.installationComplete){
                updateStatus="Installation Complete";
-               // changeStatusFlag = true ;
-               // ocList.Status={};
                ocList.Status.name = updateStatus;
-
             }
             else if(installationDate){
-                  // changeStatusFlag = true ;
                   ocList.Status.name = updateStatus;
                   updateStatus="Installation Scheduled";
                }
