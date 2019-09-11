@@ -414,14 +414,18 @@ module.exports = {
          update = ocList;
                   
          if(req.body.Installation){
-
+            
             let installationDate = req.body.Installation.installationDate;
             if(req.body.Installation.installationComplete){
                updateStatus="Installation Complete";
-               changeStatusFlag = true ;
+               // changeStatusFlag = true ;
+               ocList.Status={};
+               ocList.Status.name = updateStatus;
+
             }
             else if(installationDate){
-                  changeStatusFlag = true ;
+                  // changeStatusFlag = true ;
+                  ocList.Status.name = updateStatus;
                   updateStatus="Installation Scheduled";
                }
          }
