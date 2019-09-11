@@ -14,9 +14,11 @@ module.exports = {
       let resultModbus=[];
       modbusConsolidatedModel.find(modbusConsoldated, function(err, result){
         if (err){
-          next(err);
+         res.json({status:"error", message: "Invalid Oc Number or !!!", data:{OCNumber: OCNumber}});
+
         } else{
             resultModbus.push(result[0].seqNumber,result[0].HMINo, result[0].lotNo,result[0].colorSeq,result[0].quantity,result[0].timeDuration);
+            console.log("result",resultModbus)
             res.json(resultModbus);
         }
       });
