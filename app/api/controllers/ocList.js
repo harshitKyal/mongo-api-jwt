@@ -10,7 +10,7 @@ module.exports = {
          seqNumber : req.body.output[0],
          HMINo : req.body.output[1]
       };
-
+      console.log("output",req.body.output)
       let resultModbus=[];
       modbusConsolidatedModel.find(modbusConsoldated, function(err, result){
         if (err){
