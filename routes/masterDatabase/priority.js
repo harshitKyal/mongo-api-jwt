@@ -3,7 +3,7 @@ const router = express.Router();
 const priorityController = require('../../app/api/controllers/masterDatabase/priority');
 router.post('/create', priorityController.create);
 /**
-        * @api {get} priority/create create priority
+        * @api {post} priority/create create priority
         * @apiVersion 0.0.1
         * @apiGroup masterDatabase
         *

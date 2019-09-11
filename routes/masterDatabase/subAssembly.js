@@ -3,7 +3,7 @@ const router = express.Router();
 const subAssemblyController = require('../../app/api/controllers/masterDatabase/subAssembly');
 router.post('/create', subAssemblyController.create);
 /**
-        * @api {get} subAssembly/create create subAssembly
+        * @api {post} subAssembly/create create subAssembly
         * @apiVersion 0.0.1
         * @apiGroup masterDatabase
         *

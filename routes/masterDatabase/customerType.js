@@ -3,7 +3,7 @@ const router = express.Router();
 const customerTypeController = require('../../app/api/controllers/masterDatabase/customerType');
 router.post('/create', customerTypeController.create);
 /**
-        * @api {get} customerType/create create customerType
+        * @api {post} customerType/create create customerType
         * @apiVersion 0.0.1
         * @apiGroup masterDatabase
         *

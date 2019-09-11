@@ -3,7 +3,7 @@ const router = express.Router();
 const spareController = require('../../app/api/controllers/masterDatabase/spare');
 router.post('/create', spareController.create);
 /**
-        * @api {get} spare/create create spare
+        * @api {post} spare/create create spare
         * @apiVersion 0.0.1
         * @apiGroup masterDatabase
         *

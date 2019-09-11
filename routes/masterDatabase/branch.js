@@ -3,7 +3,7 @@ const router = express.Router();
 const branchController = require('../../app/api/controllers/masterDatabase/branch');
 router.post('/create', branchController.create);
 /**
-        * @api {get} branch/create create branch
+        * @api {post} branch/create create branch
         * @apiVersion 0.0.1
         * @apiGroup masterDatabase
         *

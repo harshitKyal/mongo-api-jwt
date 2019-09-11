@@ -419,7 +419,7 @@ module.exports = {
             if(req.body.Installation.installationComplete){
                updateStatus="Installation Complete";
                // changeStatusFlag = true ;
-               ocList.Status={};
+               // ocList.Status={};
                ocList.Status.name = updateStatus;
 
             }
