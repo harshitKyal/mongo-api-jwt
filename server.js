@@ -11,6 +11,8 @@ const customerList= require('./routes/masterDatabase/customer') ;
 const branchList= require('./routes/masterDatabase/branch') ;
 const priorityList= require('./routes/masterDatabase/priority') ;
 const customerTypeList= require('./routes/masterDatabase/customerType') ;
+
+const stateList= require('./routes/masterDatabase/state') ;
 const spareList= require('./routes/masterDatabase/spare') ;
 const products= require('./routes/masterDatabase/product') ;
 const bodyParser = require('body-parser');
@@ -56,7 +58,7 @@ app.use('/users', users);
 // private route
 app.use('/movies', movies);
 app.use('/userRole',userRole);
-app.use('/ocList',validateUser,ocList);
+app.use('/ocList',ocList);
 app.use('/scanOcList',scanOcNumber);
 app.use('/branch',branchList);
 app.use('/customer',customerList);
@@ -66,6 +68,7 @@ app.use('/priority',priorityList);
 app.use('/spare',spareList);
 app.use('/subAssembly',subAssemblyList);
 app.use('/products',products);
+app.use('/state',stateList);
 
 app.get('/favicon.ico', function(req, res) {
     res.sendStatus(204);

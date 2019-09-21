@@ -7,7 +7,14 @@ router.post('/addModbusHMI', ocListController.modbusAddd);
 router.post('/updateModbusCon', ocListController.updateModbusConsolidated)
 router.post('/addModbusCon', ocListController.addModbusConsolidated)
 router.post('/modbusGet', ocListController.modbusConsolidatedGetAll);
+
+router.post('/addLocalModbus', ocListController.addLocalModbus);
+
+router.get('/processStepyOneArray', ocListController.processStepyOneArray);
+router.get('/processStepyByObject', ocListController.processStepyByObject);
+
 router.post('/getByOCNumber', ocListController.getScanOcNumber);
+
 /**
         * @api {post} scanOcList/getByOCNumber get scanned oc by OC Number
         * @apiVersion 0.0.1
