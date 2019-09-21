@@ -58,7 +58,7 @@ app.use('/users', users);
 // private route
 app.use('/movies', movies);
 app.use('/userRole',userRole);
-app.use('/ocList',ocList);
+app.use('/ocList',validateUser, ocList);
 app.use('/scanOcList',scanOcNumber);
 app.use('/branch',branchList);
 app.use('/customer',customerList);
