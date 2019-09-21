@@ -90,7 +90,6 @@ Customer :{
         },
         address:{
             type:String,
-            required:true,
         },
         city:{
             type:String,
@@ -102,7 +101,7 @@ Customer :{
             type:String,
         },
         zip:{
-            type:Number,
+            type:String,
         },
         country:{
             type:String,

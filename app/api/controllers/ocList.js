@@ -422,18 +422,20 @@ module.exports = {
                       else {
                         res.json({status:"success",message:"OC Added successfully!!!",data:result.OCNumber})
                         // add or update customer info
-                        customerModel.update(contactNumber,con, {
-                           upsert: true,
-                           new: true,
-                           // overwrite: true // works if you comment this out
-                       },function(err, result){
-                           if (err){
-                              res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
-                           } 
-                           if(result){
-                              console.log(result)
-                           }
-                        });
+                        if (customerData.contactNumber){
+                           customerModel.update(contactNumber,con, {
+                              upsert: true,
+                              new: true,
+                              // overwrite: true // works if you comment this out
+                        },function(err, result){
+                              if (err){
+                                 res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
+                              } 
+                              if(result){
+                                 console.log(result)
+                              }
+                           });
+                        }
                       }
                   });
               }
@@ -535,18 +537,20 @@ module.exports = {
                   contactNumber:customerData.contactNumber
                }
 
-                  customerModel.update(contactNumber,con, {
-                     upsert: true,
-                     new: true,
-                     // overwrite: true // works if you comment this out
-                  },function(err, result){
-                     if (err){
-                        res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
-                     } 
-                     if(result){
-                        console.log(result)
-                     }
-                  });
+               if (customerData.contactNumber){
+                     customerModel.update(contactNumber,con, {
+                        upsert: true,
+                        new: true,
+                        // overwrite: true // works if you comment this out
+                     },function(err, result){
+                        if (err){
+                           res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
+                        } 
+                        if(result){
+                           console.log(result)
+                        }
+                     });
+                  }
 
                res.json({status:"success", message: "OC Updated Successfully!!!", data:success});
              }
