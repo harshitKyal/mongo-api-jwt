@@ -70,7 +70,7 @@ module.exports = {
       });
       },
       updateLocalModbus: function(req, res, next) {
-         
+         // console
          var updateData={
             "status":req.body.output[0],
             "duration":req.body.output[1]
