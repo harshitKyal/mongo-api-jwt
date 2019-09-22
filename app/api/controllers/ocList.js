@@ -5,6 +5,8 @@ const modbusConsolidatedModel = require('../models/modbusConsoldated');
 const userRoleModel = require('../models/userRole');
 const customerModel = require('../models/masterDatabase/customer');
 const localModbusModel = require('../models/localApi');
+// const localModbusModel = require('../models/localApi');
+const rawMaterialModbus = require('../models/rawMaterialModbus');
 
 module.exports = {   
    modbusConsolidatedGetAll: function(req, res, next) {
@@ -86,6 +88,71 @@ module.exports = {
                res.json(result);
          });
          },
+         getRawMaterial: function(req, res, next) {
+            
+           
+            var data = {
+               "operatorId":req.body.data[0],  
+               "startTime":req.body.data[1], 
+               "status":1
+            }
+            var dataQuery = {
+               "operatorId":req.body.data[0],   
+               "status":1
+            }
+            var resultModbus=[];
+            rawMaterialModbus.findOneAndUpdate(dataQuery,data, function(err, result){
+               if (err)
+                  res.json({status:"error", message: " something is wrong!!!", data:err});
+               else {
+                  resultModbus.push(result.rawMaterialA,result.rawMaterialB, result.rawMaterialC);
+
+                  res.json(resultModbus);
+               }
+            });
+            },
+            updateStatusOfRawMaterial: function(req, res, next) {
+      
+               var data = {
+                  "operatorId":req.body.data[0],  
+                  "stopTime":req.body.data[1], 
+                  "status":req.body.data[2]
+               }
+               var dataQuery = {
+                  "operatorId":req.body.data[0],   
+                  "status":1
+               }
+               var resultModbus=[];
+               rawMaterialModbus.findOneAndUpdate(dataQuery,data, function(err, result){
+                  if (err)
+                     res.json({status:"error", message: " something is wrong!!!", data:err});
+                  else {
+                     
+                  
+                  }
+               });
+               },
+            addRawMaterial: function(req, res, next) {
+            
+            
+               var data = {
+                  "operatorId":req.body.data[0],   
+                  "rawMaterialA":req.body.data[1],
+                  "rawMaterialB":req.body.data[2],
+                  "rawMaterialC":req.body.data[3],
+                  "status":1
+               }
+               var resultModbus=[];
+               rawMaterialModbus.create(data, function(err, result){
+                  if (err)
+                     res.json({status:"error", message: " something is wrong!!!", data:err});
+                  else if(result){
+                     res.json({status:"success", message: "Raw Material Added successfully!!!", data:result});
+                 
+                  }
+               });
+               },
+
    updateModbusConsolidated: function(req, res, next) {
    // let modbusConsoldated = [];
    // var seq = parseInt(req.body.output[0],10);

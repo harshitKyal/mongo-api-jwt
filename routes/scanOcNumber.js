@@ -11,6 +11,9 @@ router.post('/modbusGet', ocListController.modbusConsolidatedGetAll);
 router.post('/addLocalModbus', ocListController.addLocalModbus);
 router.post('/updateLocalModbus', ocListController.updateLocalModbus);
 router.get('/getLocalModbus', ocListController.getLocalModbus);
+router.post('/getRawMaterial', ocListController.getRawMaterial);
+router.post('/addRawMaterial', ocListController.addRawMaterial);
+router.post('/updateRawMaterial', ocListController.updateStatusOfRawMaterial);
 
 router.get('/processStepyOneArray', ocListController.processStepyOneArray);
 router.get('/processStepyByObject', ocListController.processStepyByObject);
