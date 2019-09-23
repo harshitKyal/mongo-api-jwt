@@ -73,12 +73,17 @@ module.exports = {
       },
       updateLocalModbus: function(req, res, next) {
          // console
-         var updateData={
+         var updateData;
+         var status=req.body.output[0];
+         
+         update={
             "status":req.body.output[0],
             "duration":req.body.output[1]
          }
+      
          var data = {
-            "system":1,   
+            "system":1,
+            "is_active":true    
          }
          // console.log("in function")
          localModbusModel.findOneAndUpdate(data,updateData, function(err, result){
@@ -89,38 +94,72 @@ module.exports = {
          });
          },
          getRawMaterial: function(req, res, next) {
-            
-           
-            var data = {
-               "operatorId":req.body.data[0],  
-               "startTime":req.body.data[1], 
-               "status":1
-            }
+            // var data = {
+            //    "operatorId":req.body.data[0],  
+            //    "startTime":req.body.data[1], 
+            //    "status":2
+            // }
             var dataQuery = {
-               "operatorId":req.body.data[0],   
-               "status":1
+               // "operatorId":req.body.data[0],   
+               "is_active":true ,
             }
             var resultModbus=[];
-            rawMaterialModbus.findOneAndUpdate(dataQuery,data, function(err, result){
+            rawMaterialModbus.find(dataQuery, function(err, result){
                if (err)
                   res.json({status:"error", message: " something is wrong!!!", data:err});
                else {
-                  resultModbus.push(result.rawMaterialA,result.rawMaterialB, result.rawMaterialC);
+                  resultModbus.push(result[0].rawMaterialA,result[0].rawMaterialB, result[0].rawMaterialC);
 
                   res.json(resultModbus);
                }
             });
             },
+            getStatus: function(req, res, next) {
+               var dataQuery = {
+                  "is_active":true     
+               }
+               // var resultModbus=[];
+               rawMaterialModbus.find(dataQuery, function(err, result){
+                  if (err)
+                     res.json({status:"error", message: " something is wrong!!!", data:err});
+                  else {
+                     res.json(result);
+                  }
+               });
+               },
+               getProgramData: function(req, res, next) {
+                 
+                  // var resultModbus=[];
+                  rawMaterialModbus.find({}, function(err, result){
+                     if (err)
+                        res.json({status:"error", message: " something is wrong!!!", data:err});
+                     else {
+                        res.json(result);
+                     }
+                  });
+                  },
             updateStatusOfRawMaterial: function(req, res, next) {
-      
-               var data = {
-                  "operatorId":req.body.data[0],  
-                  "stopTime":req.body.data[1], 
-                  "status":req.body.data[2]
+               
+               var status = req.body.data[2]
+               
+               var data;
+               if(status == 2){
+
+                  data = {
+                     "operatorId":req.body.data[0],  
+                     "startTime":req.body.data[1], 
+                     "status":req.body.data[2]
+                  }
+               }else{
+                 data = {
+                     "operatorId":req.body.data[0],  
+                     "stopTime":req.body.data[1], 
+                     "status":req.body.data[2]
+                  }
                }
                var dataQuery = {
                   "operatorId":req.body.data[0],   
-                  "status":1
+                  "status":2
                }
                var resultModbus=[];
                rawMaterialModbus.findOneAndUpdate(dataQuery,data, function(err, result){
@@ -140,17 +179,26 @@ module.exports = {
                   "rawMaterialA":req.body.data[1],
                   "rawMaterialB":req.body.data[2],
                   "rawMaterialC":req.body.data[3],
-                  "status":1
+                  "status":2,
+                  "is_active":true
                }
-               var resultModbus=[];
-               rawMaterialModbus.create(data, function(err, result){
+               // var resultModbus=[];
+
+               rawMaterialModbus.updateMany({"is_active":false},function(err,result){
                   if (err)
                      res.json({status:"error", message: " something is wrong!!!", data:err});
-                  else if(result){
-                     res.json({status:"success", message: "Raw Material Added successfully!!!", data:result});
-                 
+                  else{
+                     rawMaterialModbus.create(data, function(err, result){
+                        if (err)
+                           res.json({status:"error", message: " something is wrong!!!", data:err});
+                        else if(result){
+                           res.json({status:"success", message: "Raw Material Added successfully!!!", data:result});
+                       
+                        }
+                     });
                   }
-               });
+               })
+               
                },
 
    updateModbusConsolidated: function(req, res, next) {
@@ -435,7 +483,7 @@ module.exports = {
               CreatedDate : req.body.CreatedDate,
               UpdatedDate : req.body.UpdatedDate,
               SerialNumbers : req.body.SerialNumbers,
-
+              typeOfSale : req.body.typeOfSale,
               StatusLog : {
                  UserName :req.headers['x-auth-username'],
                  PreviousStatus : "New",

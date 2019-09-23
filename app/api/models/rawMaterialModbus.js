@@ -23,6 +23,9 @@ const rawMaterialSchema = new Schema({
  },
  status:{
      type:Number,
+ },
+ is_active:{
+     type:Boolean,
  }
  
 });
