@@ -14,7 +14,7 @@ module.exports = {
          seqNumber : req.body.output[0],
          HMINo : req.body.output[1]
       };
-      console.log("output",req.body.output)
+      // console.log("output",req.body.output)
       let resultModbus=[];
       modbusConsolidatedModel.find(modbusConsoldated, function(err, result){
         if (err){
@@ -51,7 +51,11 @@ module.exports = {
         if (err){
           next(err);
         } else{
-         resultModbus.push(list[0].status,list[0].duration)
+           if(list[0].status == 1 ){
+              resultModbus.push(1)
+           }
+           else
+            resultModbus.push(0)  
          res.json(resultModbus)
          //  res.json({status:"success", message: " list found!!!", output:{list}});
         }
@@ -74,19 +78,19 @@ module.exports = {
       updateLocalModbus: function(req, res, next) {
          // console
          var updateData;
+         // console.log(req.body)
          var status=req.body.output[0];
          
          update={
             "status":req.body.output[0],
-            "duration":req.body.output[1]
+            "system":1
          }
-      
+         // console.log(update)
          var data = {
-            "system":1,
-            "is_active":true    
+            "system":1 
          }
          // console.log("in function")
-         localModbusModel.findOneAndUpdate(data,updateData, function(err, result){
+         localModbusModel.update(data,update, function(err, result){
             if (err)
             res.json({status:"error", message: " something is wrong!!!", data:err});
             else
@@ -104,16 +108,45 @@ module.exports = {
                "is_active":true ,
             }
             var resultModbus=[];
+            var errResult = [];
+            errResult.push(1);
             rawMaterialModbus.find(dataQuery, function(err, result){
                if (err)
                   res.json({status:"error", message: " something is wrong!!!", data:err});
-               else {
+               else if(result.length) {
                   resultModbus.push(result[0].rawMaterialA,result[0].rawMaterialB, result[0].rawMaterialC);
-
                   res.json(resultModbus);
                }
+               else 
+                  res.json(errResult)
             });
             },
+            getHMIRawMaterial: function(req, res, next) {
+               // var data = {
+               //    "operatorId":req.body.data[0],  
+               //    "startTime":req.body.data[1], 
+               //    "status":2
+               // }
+               var dataQuery = {
+                  // "operatorId":req.body.data[0],   
+                  "is_active":true ,
+                  "status":0
+               }
+               var resultModbus=[];
+               var errResult = [];
+               errResult.push(1);
+               rawMaterialModbus.find(dataQuery, function(err, result){
+                  if (err)
+                     res.json({status:"error", message: " something is wrong!!!", data:err});
+                  else if(result.length) {
+                     resultModbus.push(result[0].rawMaterialA,result[0].rawMaterialB, result[0].rawMaterialC);
+                     res.json(resultModbus);
+                  }
+                  else 
+                     res.json(errResult)
+                  
+               });
+               },
             getStatus: function(req, res, next) {
                var dataQuery = {
                   "is_active":true     
@@ -145,28 +178,27 @@ module.exports = {
                var data;
                if(status == 2){
 
-                  data = {
-                     "operatorId":req.body.data[0],  
-                     "startTime":req.body.data[1], 
+                  data = { 
+                     "startTime":new Date(),
                      "status":req.body.data[2]
                   }
                }else{
-                 data = {
-                     "operatorId":req.body.data[0],  
-                     "stopTime":req.body.data[1], 
-                     "status":req.body.data[2]
+                 data = { 
+                     "stopTime":new Date(),
+                    "status":req.body.data[2],
+                     
                   }
                }
                var dataQuery = {
-                  "operatorId":req.body.data[0],   
-                  "status":2
+                  "is_active":true
                }
                var resultModbus=[];
-               rawMaterialModbus.findOneAndUpdate(dataQuery,data, function(err, result){
+               resultModbus.push(1)
+               rawMaterialModbus.update(dataQuery,data, function(err, result){
                   if (err)
                      res.json({status:"error", message: " something is wrong!!!", data:err});
                   else {
-                     
+                     res.json(resultModbus);
                   
                   }
                });
@@ -179,7 +211,7 @@ module.exports = {
                   "rawMaterialA":req.body.data[1],
                   "rawMaterialB":req.body.data[2],
                   "rawMaterialC":req.body.data[3],
-                  "status":2,
+                  "status":0,
                   "is_active":true
                }
                // var resultModbus=[];
@@ -202,15 +234,13 @@ module.exports = {
                },
 
    updateModbusConsolidated: function(req, res, next) {
-   // let modbusConsoldated = [];
-   // var seq = parseInt(req.body.output[0],10);
-   // console.log(req.body.output[0],seq)
+
    let reqModbusConsoldated = {
       seqNumber : req.body.output[0],
       HMINo : req.body.output[1],
       lotNo:req.body.output[2]
    };
-   console.log("update",req.body.output)
+   // console.log("update",req.body.output)
 
 //    console.log
    var modbusConsoldated =  {
@@ -222,7 +252,7 @@ module.exports = {
    };
    modbusConsolidatedModel.findOneAndUpdate(reqModbusConsoldated,modbusConsoldated, function(err, result){
       if (err){
-            console.log(err);
+            // console.log(err);
          next(err);
       } else{
          // modbusConsoldated.push({lotNo: movies[0], colorSeq: movies[1], quantity: movies[2],timeDuration:movies[3],endTime: movies[4]});
@@ -389,6 +419,8 @@ module.exports = {
          });
          
       } else if (roleName == "Branch/Dealer") {
+
+
          if(req.body.branchId){
             ocListModel.find({"OCNumber":req.body.OCNumber,"BranchID._id":req.body.branchId},function(err,result){
                if(result)
@@ -547,7 +579,7 @@ module.exports = {
                                  res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
                               } 
                               if(result){
-                                 console.log(result)
+                                 // console.log(result)
                               }
                            });
                         }
@@ -627,7 +659,18 @@ module.exports = {
          if(req.body.Installation){
             
             let installationDate = req.body.Installation.installationDate;
-            if(req.body.Installation.installationComplete && req.body.BrinvDocAttached){
+            if(req.body.typeOfSale == "Branch Sale"){
+               if(req.body.Installation.installationComplete && req.body.BrinvDocAttached){
+                  updateStatus="Installation Complete";
+                  ocList.Status.name = updateStatus;
+               }
+               else if(installationDate){
+                  updateStatus="Installation Scheduled";
+                  ocList.Status.name = updateStatus;
+                  
+               }
+            }
+            else if (req.body.installationComplete){
                updateStatus="Installation Complete";
                ocList.Status.name = updateStatus;
             }
@@ -662,7 +705,7 @@ module.exports = {
                            res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
                         } 
                         if(result){
-                           console.log(result)
+                           // console.log(result)
                         }
                      });
                   }
