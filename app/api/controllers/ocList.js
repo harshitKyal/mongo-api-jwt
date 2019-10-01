@@ -347,7 +347,7 @@ module.exports = {
          })
         
       }
-      else if(roleName=="Sales Team" && branchName && status != "In Progress - Branch/Dealer"){
+      else if(roleName=="Sales Team" && branchName && status == "In Progress - Sales"){
          updateStatus="In Progress - Branch/Dealer";
          userModel.find({"branchId":req.body.branchId},function(err,result){
             if (err) {
