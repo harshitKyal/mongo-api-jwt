@@ -670,17 +670,15 @@ module.exports = {
                   
                }
             }
-            else if (req.body.installationComplete){
+            else if (req.body.Installation.installationComplete){
                updateStatus="Installation Complete";
                ocList.Status.name = updateStatus;
             }
             else if(installationDate){
                   updateStatus="Installation Scheduled";
                   ocList.Status.name = updateStatus;
-                  
                }
-         }
-         
+            }
 
          ocListModel.findOneAndUpdate({
              _id: req.body._id
