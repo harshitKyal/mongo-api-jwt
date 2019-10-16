@@ -16,6 +16,9 @@ const customerSchema = new Schema({
  contactNumber :{
      type:String,
  },
+ CustEmailID:{
+     type:String,
+ },
  state:{
      type:String,
  },

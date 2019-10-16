@@ -10,7 +10,7 @@ const localModbusModel = require('../models/localApi');
 const rawMaterialModbus = require('../models/rawMaterialModbus');
 var nodemailer = require('nodemailer');
 
-var saveCustomerData = function(customerData){
+var saveCustomerData = function(customerData,res){
 
    var con = {
       "$set":customerData
@@ -38,8 +38,8 @@ var sendMail = function(){
   var transporter = nodemailer.createTransport({
    service: 'gmail',
    auth: {
-      user: "harshitkyal@gmail.com",
-      pass: "Gmail12@@"
+      user: "emailId@gmail.com",
+      pass: "password"
    }
  });
  
@@ -734,21 +734,23 @@ module.exports = {
    updateOC:function(req, res,next) {
 
          var customerData = req.body.Customer;
-         saveCustomerData(customerData)
+         saveCustomerData(customerData,res)
          
          let d = new Date()
          let ocList = req.body;
          let update;
          update = ocList;
-         
+         let flag = 1;
          if(req.body.BrInstaDocAttached){
             if(req.body.docAttachedCounter) {
 
-            }else
+            }else{
             res.json({status:"error",message:"No Document Attached!!!",data:null})
+            flag = 0;
+            }
                         
          }
-         if(req.body.Installation){
+         if(req.body.Installation && flag){
             
             let installationDate = req.body.Installation.installationDate;
             if(req.body.typeOfSale == "Branch Sale"){
@@ -773,39 +775,41 @@ module.exports = {
                   ocList.Status.name = updateStatus;
                }
             }
+         if(flag){
             // res.json("hello")
-         ocListModel.findOneAndUpdate({
-             _id: req.body._id
-         },update, function(err, success) {
-             // If success //
-             if (success){
-               const customerData = req.body.Customer
-               var con = {
-                  "$set":customerData
-               }
-               var contactNumber = {
-                  contactNumber:customerData.contactNumber
-               }
-
-               if (customerData.contactNumber){
-                     customerModel.update(contactNumber,con, {
-                        upsert: true,
-                        new: true,
-                        // overwrite: true // works if you comment this out
-                     },function(err, result){
-                        if (err){
-                           res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
-                        } 
-                        if(result){
-                           // console.log(result)
-                        }
-                     });
+            ocListModel.findOneAndUpdate({
+               _id: req.body._id
+            },update, function(err, success) {
+               // If success //
+               if (success){
+                  const customerData = req.body.Customer
+                  var con = {
+                     "$set":customerData
                   }
-               res.json({status:"success", message: "OC Updated Successfully!!!", data:success});
-             }
-             else 
-             res.json({status:"error", message: "Invalid OC ID", data:err});
+                  var contactNumber = {
+                     contactNumber:customerData.contactNumber
+                  }
 
-            });
+                  if (customerData.contactNumber){
+                        customerModel.update(contactNumber,con, {
+                           upsert: true,
+                           new: true,
+                           // overwrite: true // works if you comment this out
+                        },function(err, result){
+                           if (err){
+                              res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
+                           } 
+                           if(result){
+                              // console.log(result)
+                           }
+                        });
+                     }
+                  res.json({status:"success", message: "OC Updated Successfully!!!", data:success});
+               }
+               else 
+               res.json({status:"error", message: "Invalid OC ID", data:err});
+
+               });
+            }
    },
 }
