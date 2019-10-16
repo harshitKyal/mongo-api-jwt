@@ -9,14 +9,12 @@ const customerSchema = new Schema({
  },
  address:{
      type:String,
-     required:true,
  },
  city:{
      type:String,
  },
  contactNumber :{
      type:String,
-     unique:true ,
  },
  state:{
      type:String,

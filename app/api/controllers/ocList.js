@@ -1,5 +1,6 @@
 const ocListModel = require('../models/ocList');
 const userModel = require('../models/users');
+const ocDocumentModel = require('../models/ocDocument');
 const modbusModel = require('../models/modbus');
 const modbusConsolidatedModel = require('../models/modbusConsoldated');
 const userRoleModel = require('../models/userRole');
@@ -7,8 +8,58 @@ const customerModel = require('../models/masterDatabase/customer');
 const localModbusModel = require('../models/localApi');
 // const localModbusModel = require('../models/localApi');
 const rawMaterialModbus = require('../models/rawMaterialModbus');
+var nodemailer = require('nodemailer');
 
-module.exports = {   
+var saveCustomerData = function(customerData){
+
+   var con = {
+      "$set":customerData
+   }
+   
+
+         customerModel.update(customerData,con, {
+            upsert: true,
+            new: true,
+            // overwrite: true // works if you comment this out
+         },function(err, result){
+            if (err){
+               res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
+            } 
+            if(result){
+               // console.log(result)
+            
+            }
+         });
+      // }
+}
+var sendMail = function(){
+ 
+
+  var transporter = nodemailer.createTransport({
+   service: 'gmail',
+   auth: {
+      user: "harshitkyal@gmail.com",
+      pass: "Gmail12@@"
+   }
+ });
+ 
+ var mailOptions = {
+   from: 'harshitkyal@gmail.com',
+   to: 'kyalharshit@gmail.com',
+   subject: 'Sending Email using Node.js',
+   text: 'That was easy!'
+ };
+ 
+ transporter.sendMail(mailOptions, function(error, info){
+   if (error) {
+     console.log(error);
+   } else {
+     console.log('Email sent: ' + info.response);
+   }
+ });
+} 
+module.exports = {  
+   
    modbusConsolidatedGetAll: function(req, res, next) {
       let modbusConsoldated = {
          seqNumber : req.body.output[0],
@@ -494,11 +545,28 @@ module.exports = {
          });
       }
    },
+   getCustomerByName :function(req,res,next){
+      
+      var customerName ={
+         "name":req.body.customerName,
+      }
+
+      customerModel.find(customerName,function(err,result){
+         if(err) 
+            res.json({status:"error",message:"No Records Found!!!",data:err})
+         else
+            res.json({status:"success",message:"Records Found!!!",data:result})
+      });
+   },
    create: function(req, res,next) {
 
+      // var customerData = req.body.customer;
+      
       const d = new Date();
       const customerData = req.body.Customer
+      // saveCustomerData(customerData)
          var ocList = new ocListModel ({
+              OCNumber : req.body.OCNumber,
               OCDate: req.body.OCDate,
               OCNotes: req.body.OCNotes,
               Priority: req.body.Priority,
@@ -597,7 +665,20 @@ module.exports = {
 
       })
    },
+   checkForOcNumber: function(req, res, next) {
+      //sendMail()
+      
+      ocListModel.findOne({"OCNumber" : req.params.OCNumber},function(err, result){
+      if (result) 
+         res.json({status:"error", message: "Provided OC number is already in use, please enter a new OC number", data:null});
+      else
+         res.json({status:"success", message: "Unique OC Number", data:req.params.OCNumber});
+     
+         
+      })
+   },
    getAll: function(req, res, next) {
+      
       ocListModel.find({},function(err, ocList){
       if (err) 
          next(err)
@@ -649,20 +730,32 @@ module.exports = {
          }
       }
    },
+
    updateOC:function(req, res,next) {
 
+         var customerData = req.body.Customer;
+         saveCustomerData(customerData)
+         
          let d = new Date()
          let ocList = req.body;
          let update;
          update = ocList;
-                  
+         
+         if(req.body.BrInstaDocAttached){
+            if(req.body.docAttachedCounter) {
+
+            }else
+            res.json({status:"error",message:"No Document Attached!!!",data:null})
+                        
+         }
          if(req.body.Installation){
             
             let installationDate = req.body.Installation.installationDate;
             if(req.body.typeOfSale == "Branch Sale"){
-               if(req.body.Installation.installationComplete && req.body.BrinvDocAttached){
+               if(req.body.Installation.installationComplete && req.body.BrinvDocAttached && req.body.BrInstaDocAttached){
                   updateStatus="Installation Complete";
                   ocList.Status.name = updateStatus;
+                  sendMail()
                }
                else if(installationDate){
                   updateStatus="Installation Scheduled";
@@ -670,8 +763,9 @@ module.exports = {
                   
                }
             }
-            else if (req.body.Installation.installationComplete){
+            else if (req.body.Installation.installationComplete && req.body.BrInstaDocAttached){
                updateStatus="Installation Complete";
+               sendMail()
                ocList.Status.name = updateStatus;
             }
             else if(installationDate){
@@ -679,7 +773,7 @@ module.exports = {
                   ocList.Status.name = updateStatus;
                }
             }
-
+            // res.json("hello")
          ocListModel.findOneAndUpdate({
              _id: req.body._id
          },update, function(err, success) {
@@ -707,7 +801,6 @@ module.exports = {
                         }
                      });
                   }
-
                res.json({status:"success", message: "OC Updated Successfully!!!", data:success});
              }
              else 
