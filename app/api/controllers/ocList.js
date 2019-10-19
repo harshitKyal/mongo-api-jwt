@@ -784,6 +784,25 @@ module.exports = {
             },update, function(err, success) {
                // If success //
                if (success){
+                  
+                  if (req.Customer.name){
+                        var con = {
+                           "$set":customerData
+                        }
+                     
+                        customerModel.update(customerData,con, {
+                           upsert: true,
+                           new: true,
+                           // overwrite: true // works if you comment this out
+                        },function(err, result){
+                           if (err){
+                              res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
+                           } 
+                           
+                        });
+                        // }
+                     }
+               
                   // const customerData = req.body.Customer
                   // var con = {
                   //    "$set":customerData
