@@ -734,7 +734,9 @@ module.exports = {
    updateOC:function(req, res,next) {
 
          var customerData = req.body.Customer;
-         saveCustomerData(customerData,res)
+
+         if (req.body.Customer.name)
+            saveCustomerData(customerData,res)
          
          let d = new Date()
          let ocList = req.body;
@@ -782,28 +784,28 @@ module.exports = {
             },update, function(err, success) {
                // If success //
                if (success){
-                  const customerData = req.body.Customer
-                  var con = {
-                     "$set":customerData
-                  }
-                  var contactNumber = {
-                     contactNumber:customerData.contactNumber
-                  }
+                  // const customerData = req.body.Customer
+                  // var con = {
+                  //    "$set":customerData
+                  // }
+                  // var contactNumber = {
+                  //    contactNumber:customerData.contactNumber
+                  // }
 
-                  if (customerData.contactNumber){
-                        customerModel.update(contactNumber,con, {
-                           upsert: true,
-                           new: true,
-                           // overwrite: true // works if you comment this out
-                        },function(err, result){
-                           if (err){
-                              res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
-                           } 
-                           if(result){
-                              // console.log(result)
-                           }
-                        });
-                     }
+                  // if (customerData.contactNumber){
+                  //       customerModel.update(contactNumber,con, {
+                  //          upsert: true,
+                  //          new: true,
+                  //          // overwrite: true // works if you comment this out
+                  //       },function(err, result){
+                  //          if (err){
+                  //             res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
+                  //          } 
+                  //          if(result){
+                  //             // console.log(result)
+                  //          }
+                  //       });
+                  //    }
                   res.json({status:"success", message: "OC Updated Successfully!!!", data:success});
                }
                else 
