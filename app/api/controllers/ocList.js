@@ -759,7 +759,7 @@ module.exports = {
                if(req.body.Installation.installationComplete && req.body.BrinvDocAttached && req.body.BrInstaDocAttached){
                   updateStatus="Installation Complete";
                   ocList.Status.name = updateStatus;
-                  sendMail()
+                  // sendMail()
                }
                else if(installationDate){
                   updateStatus="Installation Scheduled";
@@ -769,7 +769,7 @@ module.exports = {
             }
             else if (req.body.Installation.installationComplete && req.body.BrInstaDocAttached){
                updateStatus="Installation Complete";
-               sendMail()
+               // sendMail()
                ocList.Status.name = updateStatus;
             }
             else if(installationDate){
