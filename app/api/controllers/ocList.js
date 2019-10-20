@@ -735,8 +735,8 @@ module.exports = {
 
          var customerData = req.body.Customer;
 
-         if (req.body.Customer.name)
-            saveCustomerData(customerData,res)
+         // if (req.body.Customer.name)
+         //    saveCustomerData(customerData,res)
          
          let d = new Date()
          let ocList = req.body;
@@ -785,7 +785,7 @@ module.exports = {
                // If success //
                if (success){
                   
-                  if (req.Customer.name){
+                  if (req.Customer){
                         var con = {
                            "$set":customerData
                         }
