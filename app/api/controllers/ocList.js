@@ -32,23 +32,22 @@ var saveCustomerData = function(customerData,res){
          });
       // }
 }
-var sendMail = function(){
- 
+var sendMail = function(CustEmailID){
 
   var transporter = nodemailer.createTransport({
    service: 'gmail',
    auth: {
-      user: "emailId@gmail.com",
-      pass: "password"
+      user: "cddonotreply@gmail.com",
+      pass: "Lambda123*"
    }
  });
  
- var mailOptions = {
-   from: 'harshitkyal@gmail.com',
-   to: 'kyalharshit@gmail.com',
-   subject: 'Sending Email using Node.js',
-   text: 'That was easy!'
- };
+var mailOptions = {
+	from: 'cddonotreply@gmail.com',
+	to: CustEmailID,
+	subject: 'Your product has been installed, Thank you',
+	text: 'Sample Content'
+};
  
  transporter.sendMail(mailOptions, function(error, info){
    if (error) {
@@ -666,7 +665,7 @@ module.exports = {
       })
    },
    checkForOcNumber: function(req, res, next) {
-      //sendMail()
+      // sendMail("harshit")
       
       ocListModel.findOne({"OCNumber" : req.params.OCNumber},function(err, result){
       if (result) 
@@ -759,7 +758,7 @@ module.exports = {
                if(req.body.Installation.installationComplete && req.body.BrinvDocAttached && req.body.BrInstaDocAttached){
                   updateStatus="Installation Complete";
                   ocList.Status.name = updateStatus;
-                  // sendMail()
+                  sendMail(req.body.Customer.CustEmailID)
                }
                else if(installationDate){
                   updateStatus="Installation Scheduled";
@@ -769,7 +768,7 @@ module.exports = {
             }
             else if (req.body.Installation.installationComplete && req.body.BrInstaDocAttached){
                updateStatus="Installation Complete";
-               // sendMail()
+               sendMail(req.body.Customer.CustEmailID)
                ocList.Status.name = updateStatus;
             }
             else if(installationDate){
@@ -785,11 +784,12 @@ module.exports = {
                // If success //
                if (success){
                   
-                  if (req.Customer){
+                  if (req.body.Customer){
+                        delete customerData['_id'];
                         var con = {
                            "$set":customerData
                         }
-                     
+                        
                         customerModel.update(customerData,con, {
                            upsert: true,
                            new: true,
@@ -797,7 +797,9 @@ module.exports = {
                         },function(err, result){
                            if (err){
                               res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
-                           } 
+                           }
+                           else
+                               console.log("sdad")
                            
                         });
                         // }
