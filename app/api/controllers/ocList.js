@@ -742,7 +742,7 @@ module.exports = {
          let update;
          update = ocList;
          let flag = 1;
-         if(req.body.BrInstaDocAttached){
+         if(req.body.BrInstaDocAttached || req.body.BrinvDocAttached){
             if(req.body.docAttachedCounter) {
 
             }else{
