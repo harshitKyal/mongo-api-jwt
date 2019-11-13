@@ -129,23 +129,23 @@ module.exports = {
          // console
          var updateData;
          // console.log(req.body)
-         var status=req.body.output[0];
-         
-         update={
-            "status":req.body.output[0],
-            "system":1
-         }
+         var status=req.body;
+         console.log(req.body)
+         // update={
+         //    "status":req.body.output[0],
+         //    "system":1
+         // }
          // console.log(update)
-         var data = {
-            "system":1 
-         }
+         // var data = {
+         //    "system":1 
+         // }
          // console.log("in function")
-         localModbusModel.update(data,update, function(err, result){
-            if (err)
-            res.json({status:"error", message: " something is wrong!!!", data:err});
-            else
-               res.json(result);
-         });
+         // localModbusModel.update(data,update, function(err, result){
+         //    if (err)
+         //    res.json({status:"error", message: " something is wrong!!!", data:err});
+         //    else
+               res.json("status");
+         // });
          },
          getRawMaterial: function(req, res, next) {
             // var data = {
@@ -549,8 +549,8 @@ module.exports = {
       var customerName ={
          "name":req.body.customerName,
       }
-
-      customerModel.find(customerName,function(err,result){
+      // customerModel.find({"name" : { '$regex':`^${req.body.customerName}$`}});
+      customerModel.find({"name" : { '$regex':`^${req.body.customerName}`}},function(err,result){
          if(err) 
             res.json({status:"error",message:"No Records Found!!!",data:err})
          else
