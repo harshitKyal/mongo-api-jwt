@@ -609,7 +609,7 @@ module.exports = {
                   // Saving the model to the database //                   
                   ocList.save(function(err,result) {
                      
-                      ocList.nextCount(function(err, count) {
+                     //  ocList.nextCount(function(err, count) {
                         // console.log("ccccc",count)
                         // count === 101 -> true
                  
@@ -620,7 +620,7 @@ module.exports = {
                  
                         // });
                  
-                    });
+                  //   });
                     const customerData = req.body.Customer
                     var con = {
                        "$set":customerData
@@ -739,15 +739,17 @@ module.exports = {
          
          let d = new Date()
          let ocList = req.body;
+         console.log(ocList)
+         console.log("in update")
          let update;
          update = ocList;
          let flag = 1;
-         if(req.body.BrInstaDocAttached || req.body.BrinvDocAttached){
-            if(req.body.docAttachedCounter) {
+         if(req.body.BrInstaDocAttached ){
+            if(req.body.docAttachedCounter && req.body.BrinvDocAttached) {
 
             }else{
-            res.json({status:"error",message:"No Document Attached!!!",data:null})
-            flag = 0;
+               res.json({status:"error",message:"No Document Attached!!!",data:null})
+               flag = 0;
             }
                         
          }
