@@ -130,7 +130,7 @@ module.exports = {
          var updateData;
          // console.log(req.body)
          var status=req.body;
-         console.log(req.body)
+         console.log(JSON(req.body))
          // update={
          //    "status":req.body.output[0],
          //    "system":1
@@ -144,7 +144,7 @@ module.exports = {
          //    if (err)
          //    res.json({status:"error", message: " something is wrong!!!", data:err});
          //    else
-               res.json("status");
+               res.json("sd");
          // });
          },
          getRawMaterial: function(req, res, next) {
@@ -545,14 +545,10 @@ module.exports = {
       }
    },
    getCustomerByName :function(req,res,next){
-      
-      var customerName ={
-         "name":req.body.customerName,
-      }
-      // customerModel.find({"name" : { '$regex':`^${req.body.customerName}$`}});
-      customerModel.find({"name" : { '$regex':`^${req.body.customerName}`}},function(err,result){
-         if(err) 
-            res.json({status:"error",message:"No Records Found!!!",data:err})
+   
+      customerModel.find({"name" : { '$regex':`^${req.body.customerName}`,'$options':'i'}},function(err,result){
+         if(err) {}
+            // res.json({status:"error",message:"No Records Found!!!",data:err})
          else
             res.json({status:"success",message:"Records Found!!!",data:result})
       });
@@ -733,31 +729,42 @@ module.exports = {
    updateOC:function(req, res,next) {
 
          var customerData = req.body.Customer;
-
-         // if (req.body.Customer.name)
-         //    saveCustomerData(customerData,res)
-         
          let d = new Date()
          let ocList = req.body;
-         console.log(ocList)
-         console.log("in update")
          let update;
          update = ocList;
          let flag = 1;
-         if(req.body.BrInstaDocAttached ){
-            if(req.body.docAttachedCounter && req.body.BrinvDocAttached) {
+         let documentCounter = "No";
 
-            }else{
+         if(req.body.docAttachedCounter)
+            documentCounter=req.body.docAttachedCounter
+      
+         if(req.body.typeOfSale == "Branch Sale"){
+            if(req.body.Installation.installationComplete && req.body.BrinvDocAttached && req.body.BrInstaDocAttached  ){
+               if((req.body.docAttachedCounter <2)){
+                  res.json({status:"error",message: "" + documentCounter + " Document Attached!!!",data:null})
+                  flag = 0;
+               }
+
+            }
+         }
+
+         if(req.body.BrInstaDocAttached ){
+            if(!req.body.docAttachedCounter){
                res.json({status:"error",message:"No Document Attached!!!",data:null})
                flag = 0;
+            }
+            else if(req.body.BrinvDocAttached) {
+
             }
                         
          }
          if(req.body.Installation && flag){
             
             let installationDate = req.body.Installation.installationDate;
+
             if(req.body.typeOfSale == "Branch Sale"){
-               if(req.body.Installation.installationComplete && req.body.BrinvDocAttached && req.body.BrInstaDocAttached){
+               if(req.body.Installation.installationComplete && req.body.BrinvDocAttached && req.body.BrInstaDocAttached && (req.body.docAttachedCounter >1)){
                   updateStatus="Installation Complete";
                   ocList.Status.name = updateStatus;
                   sendMail(req.body.Customer.CustEmailID)
