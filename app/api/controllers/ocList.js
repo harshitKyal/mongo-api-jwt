@@ -685,18 +685,17 @@ module.exports = {
    getClosedOCs: function(req, res, next) {
       let roleName = req.body.roleName;
       let branchId = req.body.branchId;
-
+      
       if(req.body.Priority){
          if(roleName =="Branch/Dealer") {
-            ocListModel.find({"Priority.name":req.body.Priority,"Status.name":"Closed","BranchID._id":branchId},function(err, ocList){
+            ocListModel.find({"Priority.name":req.body.Priority,"Status.name":"Closed","BranchID._id":branchId},null,{sort: {"UpdatedDate": -1}},function(err, ocList){
                if (err) 
                   next(err)
-                  else 
+               else 
                   res.json({status:"success", message: "OC List fetched!!!", data:{ocList: ocList}});
-         
                })
          }else{
-            ocListModel.find({"Priority.name":req.body.Priority,"Status.name":"Closed"},function(err, ocList){
+            ocListModel.find({"Priority.name":req.body.Priority,"Status.name":"Closed"},null,{sort: {"UpdatedDate": -1}},function(err, ocList){
                if (err) 
                   next(err)
                   else 
@@ -707,7 +706,7 @@ module.exports = {
       }
       else{
          if(roleName =="Branch/Dealer") {
-            ocListModel.find({"Status.name":"Closed","BranchID._id":branchId},function(err, ocList){
+            ocListModel.find({"Status.name":"Closed","BranchID._id":branchId},null,{sort: {"UpdatedDate": -1}},function(err, ocList){
                if (err) 
                   next(err)
                   else 
@@ -715,7 +714,7 @@ module.exports = {
          
                })
          }else{
-            ocListModel.find({"Status.name":"Closed"},function(err, ocList){
+            ocListModel.find({"Status.name":"Closed"},null,{sort: {"UpdatedDate": -1}},function(err, ocList){
                if (err) 
                   next(err)
                   else 
@@ -839,7 +838,7 @@ module.exports = {
                   res.json({status:"success", message: "OC Updated Successfully!!!", data:success});
                }
                else 
-               res.json({status:"error", message: "Invalid OC ID", data:err});
+                  res.json({status:"error", message: "OC Not Updated Successfully!!!", data:err});
 
                });
             }
