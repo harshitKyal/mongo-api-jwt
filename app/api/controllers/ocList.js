@@ -6,7 +6,6 @@ const modbusConsolidatedModel = require('../models/modbusConsoldated');
 const userRoleModel = require('../models/userRole');
 const customerModel = require('../models/masterDatabase/customer');
 const localModbusModel = require('../models/localApi');
-// const localModbusModel = require('../models/localApi');
 const rawMaterialModbus = require('../models/rawMaterialModbus');
 var nodemailer = require('nodemailer');
 
@@ -16,21 +15,18 @@ var saveCustomerData = function(customerData,res){
       "$set":customerData
    }
    
-
-         customerModel.update(customerData,con, {
-            upsert: true,
-            new: true,
-            // overwrite: true // works if you comment this out
-         },function(err, result){
-            if (err){
-               res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
-            } 
-            if(result){
-               // console.log(result)
-            
-            }
-         });
-      // }
+   customerModel.update(customerData,con, {
+      upsert: true,
+      new: true,
+      // overwrite: true // works if you comment this out
+   },function(err, result){
+      if (err){
+         res.json({status:"error",message:"Customer Info Not updated Successfully!!!",data:err})
+      } 
+      if(result){
+      
+      }
+   });
 }
 var sendMail = function(CustEmailID){
 
@@ -44,7 +40,8 @@ var sendMail = function(CustEmailID){
  
 var mailOptions = {
 	from: 'cddonotreply@gmail.com',
-	to: CustEmailID,
+   to: CustEmailID,
+   cc: "contact@lambdablocks.com",
 	subject: 'Your product has been installed, Thank you',
 	text: 'Sample Content'
 };
@@ -739,22 +736,24 @@ module.exports = {
             documentCounter=req.body.docAttachedCounter
       
          if(req.body.typeOfSale == "Branch Sale"){
-            if(req.body.Installation.installationComplete && req.body.BrinvDocAttached && req.body.BrInstaDocAttached  ){
+            if((req.body.BrinvDocAttached && req.body.BrInstaDocAttached) || req.body.Installation.installationComplete ){
                if((req.body.docAttachedCounter <2)){
                   res.json({status:"error",message: "" + documentCounter + " Document Attached!!!",data:null})
                   flag = 0;
                }
 
             }
-         }
-
-         if(req.body.BrInstaDocAttached ){
+         }else if(req.body.Installation.installationComplete){
             if(!req.body.docAttachedCounter){
                res.json({status:"error",message:"No Document Attached!!!",data:null})
                flag = 0;
             }
-            else if(req.body.BrinvDocAttached) {
+         }
 
+         if(req.body.BrInstaDocAttached || req.body.BrinvDocAttached ){
+            if(!req.body.docAttachedCounter){
+               res.json({status:"error",message:"No Document Attached!!!",data:null})
+               flag = 0;
             }
                         
          }
